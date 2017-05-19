@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>User:</strong>
+  <%= @image.user.email %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%= @image.name %>
+</p>
+<p>
+  <strong>Albums:</strong>
+  <% @image.albums.each do |album| %>
+    <%=album.name%><br>
+  <%end%>
+</p>
+
+<p>
+  <strong>Permissions:</strong>
+  <% if  @image.public? %>
+    Public
+  <%elsif @image.private?%>
+    Private
+  <%else%>
+    Only Friends and You
+  <% end%>
+
+</p>
+<%= image_tag @image.file.url %>
+
+
+
+
+<h2>add to album</h2>
+<%= form_tag('javascript:void(0)') do -%>
+  <%= select_tag 'album', options_for_select(@albums.collect{ |u| [u.name, u.id] })%>
+  <%= submit_tag 'Add', class:"add_btn" %>
+<% end -%>
+<%= link_to 'Edit', edit_image_path(@image) %> |
+<%= link_to 'Back', images_path %>
+
+
+<script>
+$( ".add_btn" ).click(function() {
+  var album = $("select").val()
+  var image = gon.image;
+  console.log(album);
+  console.log(image);
+
+  $.ajax({
+    type: "POST",
+    url: "/images/add-album",
+    dataType:"json",
+    data: {image:image,album:album },
+    success:function(data) {
+      console.log("good");
+      alert("image was added to album!")
+      return false;
+    },
+    error:function(data) {
+      console.log("bad");
+      console.log(data);
+      return false;
+    }
+  });
+
+
+});
+
+
+</script>

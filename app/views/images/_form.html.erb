@@ -1,0 +1,19 @@
+
+<%= simple_form_for @image do |f| %>
+  <%= f.input :name%>
+  <%= f.input :file, as: :file %>
+  <%= f.label "Public (Everybody)" %>
+  <%= f.input_field :public, as: :boolean %><br>
+  <%= f.label "Friends and You Only" %>
+  <%= f.input_field :only_friends, as: :boolean %><br>
+  <%= f.label "Private (only you)" %>
+  <%= f.input_field :private, as: :boolean %><br>
+  <%= f.button :submit %>
+<% end %>
+
+
+<script>
+$('input[type="checkbox"]').on('change', function() {
+   $('input[type="checkbox"]').not(this).prop('checked', false);
+});
+</script>
