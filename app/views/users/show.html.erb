@@ -1,0 +1,76 @@
+<h1> USER: <%=@user.email%>'s PAGE </h1>
+
+
+<% if user_signed_in? %>
+   <% if current_user == @user %>
+      <h4>Welcome to Your Page</h4>
+
+      <h4>Your Friends </h4>
+      <% @user.friends.each do |u| %>
+        <%=u.email%> <br>
+      <%end%>
+      <h4>Your Pending Friend Requests </h4>
+      <% @user.pending_friends.each do |u| %>
+        <%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button><br>
+      <%end%>
+
+      <h4>Your Requested Friends</h4>
+      <% @user.requested_friends.each do |u| %>
+        <%=u.email%><br>
+      <%end%>
+
+   <% elsif current_user.pending_friends.include?(@user)%>
+      <h4> Friend Request Pending</h4>
+    <%else%>
+      <button type="button" class="request">Request Friendship!</button>
+   <%end%>
+<%end%>
+
+
+
+<script>
+
+$( ".request" ).click(function() {
+  var friend = gon.user;
+  console.log(friend);
+
+  $.ajax({
+    type: "POST",
+    url: "/users/request-friend",
+    dataType:"json",
+    data: {friend:friend},
+    success:function(data) {
+      console.log("good");
+      alert("request sent!")
+      return false;
+    },
+    error:function(data) {
+      console.log("bad");
+      console.log(data);
+      return false;
+    }
+  });
+});
+
+$( ".accept" ).click(function() {
+  var friend = $(this).val();
+  console.log(friend);
+
+  $.ajax({
+    type: "POST",
+    url: "/users/accept-friend",
+    dataType:"json",
+    data: {friend:friend},
+    success:function(data) {
+      console.log("good");
+      alert("Friend Added!")
+      return false;
+    },
+    error:function(data) {
+      console.log("bad");
+      console.log(data);
+      return false;
+    }
+  });
+});
+</script>

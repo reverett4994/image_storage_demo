@@ -54,3 +54,5 @@ gem 'simple_form'
 gem 'devise'
 
 gem 'gon'
+
+gem 'has_friendship'

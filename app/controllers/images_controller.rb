@@ -11,7 +11,9 @@ class ImagesController < ApplicationController
   # GET /images/1.json
   def show
     gon.image=@image.id
-    @albums=current_user.albums
+    if user_signed_in?
+      @albums=current_user.albums
+    end
   end
 
   # GET /images/new

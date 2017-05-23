@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+ has_friendship
  has_many :images
  has_many :albums
   # Include default devise modules. Others available are:

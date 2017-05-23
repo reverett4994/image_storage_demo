@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519082853) do
+ActiveRecord::Schema.define(version: 20170523072759) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 20170519082853) do
   create_table "albums_images", id: false, force: :cascade do |t|
     t.integer "image_id", limit: 4, null: false
     t.integer "album_id", limit: 4, null: false
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "friendable_id",   limit: 4
+    t.string   "friendable_type", limit: 255
+    t.integer  "friend_id",       limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "blocker_id",      limit: 4
+    t.integer  "status",          limit: 4
   end
 
   create_table "images", force: :cascade do |t|

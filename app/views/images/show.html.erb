@@ -1,40 +1,50 @@
 <p id="notice"><%= notice %></p>
-<p>
-  <strong>User:</strong>
-  <%= @image.user.email %>
-</p>
-<p>
-  <strong>Name:</strong>
-  <%= @image.name %>
-</p>
-<p>
-  <strong>Albums:</strong>
-  <% @image.albums.each do |album| %>
-    <%=album.name%><br>
-  <%end%>
-</p>
+<% if current_user != @image.user && @image.public? == false %>
+  <h1>IMAGE IS PRIVATE; IF IT IS YOUR IMAGE SIGN IN </h1>
+<%else%>
+  <p>
+    <strong>User:</strong>
+    <%= @image.user.email %>
+  </p>
+  <p>
+    <strong>Name:</strong>
+    <%= @image.name %>
+  </p>
+  <p>
+    <strong>Albums:</strong>
+    <% @image.albums.each do |album| %>
+      <%=album.name%><br>
+    <%end%>
+  </p>
 
-<p>
-  <strong>Permissions:</strong>
-  <% if  @image.public? %>
-    Public
-  <%elsif @image.private?%>
-    Private
+  <p>
+    <strong>Permissions:</strong>
+    <% if  @image.public? %>
+      Public
+    <%elsif @image.private?%>
+      Private
+    <%else%>
+      Only Friends and You
+    <% end%>
+
+  </p>
+  <%= image_tag @image.file.url %>
+
+
+
+  <% if user_signed_in? %>
+    <h2>add to album</h2>
+    <%= form_tag('javascript:void(0)') do -%>
+      <%= select_tag 'album', options_for_select(@albums.collect{ |u| [u.name, u.id] })%>
+      <%= submit_tag 'Add', class:"add_btn" %>
+    <% end -%>
+
   <%else%>
-    Only Friends and You
-  <% end%>
-
-</p>
-<%= image_tag @image.file.url %>
+    <h2> Sign in to add to an album!</h2>
+  <% end %>
+<%end%>
 
 
-
-
-<h2>add to album</h2>
-<%= form_tag('javascript:void(0)') do -%>
-  <%= select_tag 'album', options_for_select(@albums.collect{ |u| [u.name, u.id] })%>
-  <%= submit_tag 'Add', class:"add_btn" %>
-<% end -%>
 <%= link_to 'Edit', edit_image_path(@image) %> |
 <%= link_to 'Back', images_path %>
 
