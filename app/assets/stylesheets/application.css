@@ -13,3 +13,43 @@
  *= require_tree .
  *= require_self
  */
+
+
+#header{
+  padding: 10px;
+  background-color: red;
+}
+#header img{
+  height: 50px;
+  width: 50px;
+  display: inline;
+}
+#header ul {
+  display: inline;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#header li {
+    float: right;
+}
+
+#header li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#header li a:hover {
+    background-color: #111;
+    -o-transition:.8s;
+    -ms-transition:.8s;
+    -moz-transition:.58;
+    -webkit-transition:.8s;
+    /* ...and now for the proper property */
+    transition:.8s;
+}

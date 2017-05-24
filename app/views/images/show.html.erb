@@ -1,6 +1,36 @@
 <p id="notice"><%= notice %></p>
 <% if current_user != @image.user && @image.public? == false %>
-  <h1>IMAGE IS PRIVATE; IF IT IS YOUR IMAGE SIGN IN </h1>
+  <% if @image.only_friends? == true && current_user.friends.include?(@image.user)%>
+    <p>
+      <strong>User:</strong>
+      <%= @image.user.email %>
+    </p>
+    <p>
+      <strong>Name:</strong>
+      <%= @image.name %>
+    </p>
+    <p>
+      <strong>Albums:</strong>
+      <% @image.albums.each do |album| %>
+        <%=album.name%><br>
+      <%end%>
+    </p>
+
+    <p>
+      <strong>Permissions:</strong>
+      <% if  @image.public? %>
+        Public
+      <%elsif @image.private?%>
+        Private
+      <%else%>
+        Only Friends and You
+      <% end%>
+
+    </p>
+    <%= image_tag @image.file.url %>
+  <%else%>
+    <h1>IMAGE IS PRIVATE; IF IT IS YOUR IMAGE SIGN IN </h1>
+  <%end%>
 <%else%>
   <p>
     <strong>User:</strong>

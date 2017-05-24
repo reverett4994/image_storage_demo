@@ -8,6 +8,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div id ="header">
+     <img src="logo.png" alt="Logo"> 
+    <ul>
+      <li><a class="active" href="#home">Home</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#about">About</a></li>
+  </ul>
+</div>
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
   <% if user_signed_in? %>
