@@ -3,27 +3,27 @@
 <head>
   <title>ImageStorage</title>
   <%= Gon::Base.render_data %>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500i" rel="stylesheet"> 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
   <div id ="header">
-     <img src="logo.png" alt="Logo"> 
+     <div id="logo"></div>
     <ul>
-      <li><a class="active" href="#home">Home</a></li>
-      <li><a href="#news">News</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#about">About</a></li>
+      <% if user_signed_in? %>
+        <li> <%= link_to "hello #{current_user.email} Sign Out :(", destroy_user_session_path, :method => :delete %></li>
+      <%else%>
+        <li><%= link_to 'Sign In!', new_user_session_path %></li>
+      <%end%>
+      <li><%= link_to 'Your Page', "/users/#{current_user.id}" %></li>
+      <li><a class="active" href="/albums">Albums</a></li>
+      <li><a class="active" href="/images">Images</a></li>
   </ul>
 </div>
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
-  <% if user_signed_in? %>
-    hello <%=current_user.email%> <%= link_to 'Sign Out :(', destroy_user_session_path, :method => :delete %>
-  <%else%>
-    <%= link_to 'Sign In!', new_user_session_path %>
-  <%end%>
 <%= yield %>
 
 </body>

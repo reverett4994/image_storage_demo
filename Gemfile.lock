@@ -81,6 +81,7 @@ GEM
     has_friendship (1.0.2)
       rails (>= 4.0.0, < 5.1.0)
       stateful_enum
+    high_voltage (3.0.0)
     i18n (0.8.1)
     jbuilder (2.6.4)
       activesupport (>= 3.0.0)
@@ -196,6 +197,7 @@ DEPENDENCIES
   figaro
   gon
   has_friendship
+  high_voltage (~> 3.0.0)
   jbuilder (~> 2.0)
   jquery-rails
   mysql2 (>= 0.3.13, < 0.5)

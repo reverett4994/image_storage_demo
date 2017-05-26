@@ -56,3 +56,5 @@ gem 'devise'
 gem 'gon'
 
 gem 'has_friendship'
+
+gem 'high_voltage', '~> 3.0.0'

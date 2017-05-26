@@ -14,42 +14,101 @@
  *= require_self
  */
 
-
-#header{
-  padding: 10px;
-  background-color: red;
+body{
+  margin: 0;
 }
-#header img{
+#header{
+  margin: 0;
+  padding: 10px;
+  padding-top: 0;
+  z-index: 2000;
+
+
+      font-family: 'Montserrat', sans-serif;
+      font-style: italic;
+}
+#logo{
   height: 50px;
   width: 50px;
-  display: inline;
+  display: inline-block;
+  background-image: url('/logo.png');
+   background-size: 50px 50px;
+  background-position: center;
+
+}
+
+#logo:hover{
+    background-image: url('/sleep_logo.png');
 }
 #header ul {
   display: inline;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 18px;
 }
 
 #header li {
     float: right;
+    padding: 0;
+    margin: 8px;
 }
 
 #header li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 5px 10px;
     text-decoration: none;
 }
 
 #header li a:hover {
-    background-color: #111;
+  background: rgb(204, 204, 204); /* Fall-back for browsers that don't
+                                  support rgba */
+  background: rgba(204, 204, 204, .5);
     -o-transition:.8s;
     -ms-transition:.8s;
     -moz-transition:.58;
     -webkit-transition:.8s;
     /* ...and now for the proper property */
     transition:.8s;
+}
+
+#banner{
+  margin-top: -85px;
+  position: relative;
+  top: 0;
+  max-width: 100%;
+  z-index: -2000;
+  clear: both;
+}
+
+/*THE BIRD IS A MARCAW */
+
+
+.third{
+  width: 33%;
+  height: 550px;
+  display: inline-block;
+  float: left;
+  margin-left: 5px;
+}
+#left{
+  background-color: #FEE202;
+}
+
+#middle{
+  background-color: #29B3FA;
+}
+#right{
+  background-color: #F60005;
+}
+.home_icon{
+  height: 25D0px;
+  width: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
 }
