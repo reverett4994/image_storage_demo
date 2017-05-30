@@ -89,10 +89,27 @@ body{
 
 .third{
   width: 33%;
-  height: 550px;
+  height: 1000px;
   display: inline-block;
   float: left;
   margin-left: 5px;
+}
+.third h1{
+  text-align: center;
+  margin-top: 50px;
+  font-size: 105px;
+  font-family: 'Fjalla One', sans-serif;
+  letter-spacing: 3px;
+}
+.sub_text{
+  text-align: center;
+  font-size: 20px;
+  margin-left: 90px;
+  margin-right: 90px;
+  margin-top: -60px;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 50px;
+
 }
 #left{
   background-color: #FEE202;
@@ -105,10 +122,50 @@ body{
   background-color: #F60005;
 }
 .home_icon{
-  height: 25D0px;
+  height: 250px;
   width: 250px;
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
+}
+.home_icon_middle{
+  height: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.home_button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    text-align: center;
+    border: 6px solid transparent;
+    border-image: linear-gradient(to right, #0865F1 0%, #C704F6 100%);
+    border-image-slice: 1;
+    background: rgb(204, 204, 204); /* Fall-back for browsers that don't
+                                    support rgba */
+    background: rgba(204, 204, 204, .5);
+    color: #000;
+    font-size: 2em;
+    padding: 10px 40px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.home_button:hover {
+    background-color: white;
+    background: linear-gradient(to right, #0865F1, #C704F6);
+      -o-transition:.8s;
+      -ms-transition:.8s;
+      -moz-transition:.58;
+      -webkit-transition:.8s;
+      /* ...and now for the proper property */
+      transition:.8s;
+    color: #fff;
+
 }
