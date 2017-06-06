@@ -1,0 +1,34 @@
+<h1><%= @image.name %></h1>
+<h2>Submitted by: <%= @image.user.email %></h2>
+<%= image_tag @image.file.url %>
+
+
+
+<h3>Included in Albums:  <%= @image.albums.count%><br>
+  <% @image.albums.each do |album| %>
+    <%= link_to "#{album.name}", album %><br>
+  <%end%>
+</h3>
+<% if user_signed_in? %>
+  <h3>add to album</h3>
+  <%= form_tag('javascript:void(0)') do -%>
+    <div class="styled-select blue semi-square">
+      <%= select_tag 'album', options_for_select(@albums.collect{ |u| [u.name, u.id] })%>
+      <%= submit_tag 'Add', class:"add_btn" %>
+  </div>
+  <% end -%>
+
+<%else%>
+  <h2> Sign in to add to an album!</h2>
+<% end %>
+<p>
+  <strong>Permissions:</strong>
+  <% if  @image.public? %>
+    Public
+  <%elsif @image.private?%>
+    Private
+  <%else%>
+    Only Friends and You
+  <% end%>
+
+</p>

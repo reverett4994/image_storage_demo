@@ -1,27 +1,81 @@
-<p id="notice"><%= notice %></p>
+<div id="gallery_wrapper">
+  <h1>Listing Images</h1>
+  <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span></a>
 
-<h1>Listing Images</h1>
+      <% @images.each do |image| %>
+        <%= link_to(image) do %>
+          <%= image_tag image.file.url,class:"gallery_image" %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+          <% if image.private %>
+            <span class="text-content"><span>This Image is Private<br> Included in <%= image.albums.count%> Albums</span></span>
+          <%elsif image.only_friends %>
+            <span class="text-content"><span>This Image is for Friends Only <br> Included in <%= image.albums.count%> Albums</span></span>
+          <%else%>
+            <span class="text-content"><span>This Image is Public <br> Included in <%= image.albums.count%> Albums</span></span>
+          <%end%>
+        <% end %>
+      <% end %>
 
-  <tbody>
-    <% @images.each do |image| %>
-      <tr>
-        <td><%= image.name %></td>
-        <td><%= link_to 'Show', image %></td>
-        <td><%= link_to 'Edit', edit_image_path(image) %></td>
-        <td><%= link_to 'Destroy', image, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<br>
+  <br>
 
-<%= link_to 'New Image', new_image_path %>
+  <%= link_to 'New Image', new_image_path %>
+</div>
+
+
+<script>
+
+$(function() {
+  $( ".text-content" ).each(function() {
+    var image= ($(this).siblings().height()) * -1
+    $(this).css({"margin-top": image-(image/2.25)});
+  });
+});
+
+
+$( ".btn" ).click(function() {
+  if ( $(".gallery_image").width()=="1200" ){
+
+    $(".gallery_image").width("500px")
+    $(".gallery_image").height("500px")
+    $(".gallery_image").css("display","inline-block")
+    $(".gallery_image").css("object-fit","cover")
+    $(".gallery_image").css("object-position","50% 20%")
+
+    $( ".text-content" ).each(function() {
+      var image= $(this).siblings().position();
+      $(this).css({"margin-top":"-300px"});
+      $(this).css({"margin-left":image.left+130});
+    });
+  }else{
+    $(".gallery_image").width("1200px");
+    $(".gallery_image").height("auto");
+    $(".gallery_image").css("display","block");
+    $(".gallery_image").css("object-fit","fill");
+    $(".gallery_image").css("object-position","50% 50%");
+    //$(".gallery_image").after("<span class='text-content'><span>'Some Cool Pop-Up Text :D JV'</span></span>");
+
+    //  $( ".gallery_image" ).each(function() {
+    //    if (this.hasClass("private")) {
+    //      this.after("<span class='text-content'><span>'private'</span></span>");
+    //    } else if (this.hasClass("only_friends")) {
+    //        this.after("<span class='text-content'><span>'Friends'</span></span>");
+    //    } else {
+    //        this.after("<span class='text-content'><span>'Public'</span></span>");
+    //    }
+    //  });
+
+    $( ".text-content" ).each(function() {
+      var image= ($(this).siblings().height()) * -1
+      $(this).css({"margin-top": image-(image/2.25)});
+      $(this).css({"margin-left": "auto"});
+      $(this).css({"margin-right": "auto"});
+      $(this).css({"left": "0"});
+      $(this).css({"right": "0"});
+    });
+  }
+});
+
+
+
+</script>
