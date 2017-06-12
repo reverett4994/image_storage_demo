@@ -14,8 +14,8 @@
   <%= form_tag('javascript:void(0)') do -%>
     <div class="styled-select blue semi-square">
       <%= select_tag 'album', options_for_select(@albums.collect{ |u| [u.name, u.id] })%>
-      <%= submit_tag 'Add', class:"add_btn" %>
-  </div>
+    </div>
+  <%= submit_tag 'Add', class:"add_btn" %>
   <% end -%>
 
 <%else%>

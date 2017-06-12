@@ -1,7 +1,13 @@
 <div id="gallery_wrapper">
-  <h1>Listing Images</h1>
+  <% if @album %>
+    <h1>All Images from <%=@album.name%> album </h1>
+  <%else%>
+    <h1>Listing Images</h1>
+  <%end%>
   <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span></a>
-
+  <div class="flickr_pagination">
+    <%= will_paginate @images %>
+  </div>
       <% @images.each do |image| %>
         <%= link_to(image) do %>
           <%= image_tag image.file.url,class:"gallery_image" %>
@@ -15,7 +21,9 @@
           <%end%>
         <% end %>
       <% end %>
-
+      <div class="flickr_pagination">
+        <%= will_paginate @images %>
+      </div>
 
   <br>
 

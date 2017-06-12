@@ -4,7 +4,12 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @images = current_user.images
+    if params[:sort]
+      @album=Album.find(params[:sort])
+      @images=@album.images.paginate(:page => params[:page], :per_page => 3)
+    else
+      @images = current_user.images.paginate(:page => params[:page], :per_page => 3)
+    end
   end
 
 

@@ -28,7 +28,7 @@
   <h1>Albums</h1>
   <div class="sub_text">place all your images into a unlimited amount of albums to help keep them organized and easy to find among hundreds of photos.</div>
   <% if user_signed_in? %>
-    <a href="#" class="btn btn-4"><span>My Albums</span></a>
+    <a href="/albums" class="btn btn-4"><span>My Albums</span></a>
   <%else%>
     <a href="/users/sign_in" class="btn btn-4"><span>My Albums</span></a>
   <%end%>
