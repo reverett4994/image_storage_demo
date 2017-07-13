@@ -7,7 +7,7 @@
 
       <h4>Your Friends </h4>
       <% @user.friends.each do |u| %>
-        <%=u.email%> <br>
+        <%= link_to u.email,"/users/#{u.id}" %> <br>
       <%end%>
       <h4>Your Pending Friend Requests </h4>
       <% @user.pending_friends.each do |u| %>
@@ -18,7 +18,9 @@
       <% @user.requested_friends.each do |u| %>
         <%=u.email%><br>
       <%end%>
+      <a href="/images" class="btn btn-4"><span>My Pictures</span></a><br>
 
+      <a href="/albums" class="btn btn-4"><span>My Albums</span></a>
    <% elsif current_user.pending_friends.include?(@user)%>
       <h4> Friend Request Pending</h4>
     <%else%>

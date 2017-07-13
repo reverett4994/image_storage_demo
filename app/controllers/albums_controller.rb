@@ -7,9 +7,11 @@ class AlbumsController < ApplicationController
     @albums = current_user.albums
   end
 
-  # GET /albums/1
+  # GET /albums/12
   # GET /albums/1.json
   def show
+    redirect_to images_path(sort:@album.id)
+
   end
 
   # GET /albums/new
