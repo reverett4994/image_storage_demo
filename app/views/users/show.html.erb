@@ -28,6 +28,10 @@
    <%end%>
 <%end%>
 
+<% if  user_signed_in? == false  || current_user != @user%>
+  <%= link_to "#{@user.email} Pictures",images_path(:user => @user.id)%><br>
+  <a href="/albums" class=""><span><%=@user.email%> Albums</span></a>
+<%end%>
 
 
 <script>

@@ -7,6 +7,9 @@ class ImagesController < ApplicationController
     if params[:sort]
       @album=Album.find(params[:sort])
       @images=@album.images.paginate(:page => params[:page], :per_page => 3)
+    elsif params[:user]
+      @u=User.find(params[:user])
+      @images=@u.images.paginate(:page => params[:page], :per_page => 3)
     else
       @images = current_user.images.paginate(:page => params[:page], :per_page => 3)
     end
