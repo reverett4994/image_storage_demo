@@ -27,6 +27,7 @@
 
 <div id="album_gallery_wrapper">
   <h1>Listing Albums</h1>
+  <a href="javascript:void(0)"id="delete_link"><h3>Delete Albums</h3></a>
       <% @albums.each do |album| %>
         <%= link_to(images_path(sort:album.id)) do %>
           <div class="album_link">
@@ -39,3 +40,22 @@
 
 <%= link_to 'New Album', new_album_path %>
 </div>
+
+
+      "<h2 class='album_delete_links'>"+albums[i]+"</h2>"
+<script>
+
+$( "#delete_link" ).click(function() {
+  var albums=gon.albums.split(",")
+  console.log(albums);
+  for(var i = 0; i < albums.length; i++) {
+    $(this).append(
+      "<form action=''>\
+        <input type='checkbox' name='album' value='"+albums[i]+"'><p class='check_text'>"+albums[i]+"</p>\
+      </form>"
+    );
+}
+
+});
+
+</script>

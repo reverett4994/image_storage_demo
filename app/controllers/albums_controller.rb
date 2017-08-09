@@ -5,6 +5,11 @@ class AlbumsController < ApplicationController
   # GET /albums.json
   def index
     @albums = current_user.albums
+    gon.albums=""
+    current_user.albums.each do |a|
+      gon.albums+=a.name + ","
+    end
+    gon.albums.chomp!(",")
   end
 
   # GET /albums/12
