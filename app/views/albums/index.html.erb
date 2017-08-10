@@ -24,13 +24,12 @@
 
 <br>
 
-
 <div id="album_gallery_wrapper">
   <h1>Listing Albums</h1>
   <a href="javascript:void(0)"id="delete_link"><h3>Delete Albums</h3></a>
       <% @albums.each do |album| %>
         <%= link_to(images_path(sort:album.id)) do %>
-          <div class="album_link">
+          <div class="album_link" id="<%=album.name.tr(" ", "_")%>">
             <p><%=album.name%></p>
             <img src="/pictures.png" class="album_icon" style="visibility: hidden;">
           </div>
@@ -42,20 +41,62 @@
 </div>
 
 
-      "<h2 class='album_delete_links'>"+albums[i]+"</h2>"
 <script>
 
 $( "#delete_link" ).click(function() {
-  var albums=gon.albums.split(",")
-  console.log(albums);
-  for(var i = 0; i < albums.length; i++) {
-    $(this).append(
-      "<form action=''>\
-        <input type='checkbox' name='album' value='"+albums[i]+"'><p class='check_text'>"+albums[i]+"</p>\
-      </form>"
-    );
-}
+  if ($(".check_text").length < 1) {
+    var albums=gon.albums.split(",")
+    for(var i = 0; i < albums.length; i++) {
+      $(this).append(
+        "<form action=''>\
+          <input type='checkbox' class='delete_check 'name='album' value='"+albums[i]+"'><p class='check_text'>"+albums[i]+"</p>\
+        </form>"
+      );
+    }
+    console.log($(".delete_check").length);
+  }
+  $(".delete_check").change(function() {
+    if(this.checked) {
+      var box= this
+      var album = this.value
+      swal({
+        title: "Are you sure you want to delete the album "+ this.value+"?",
+        text: "The album will be deleted but all the pictures will be kept",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm) {
+          $.ajax({
+              type: "POST",
+              url: "/albums/" + album,
+              dataType: "json",
+              data: {"_method":"delete"},
+              complete: function(){
+                  $("#"+album.split(' ').join('_')).fadeOut();
+                  $(box).fadeOut();
+                  $("p:contains("+album+")").fadeOut();
 
+              }
+          });
+          swal("Deleted!", "Your imaginary file has been deleted.", "success");
+        } else {
+            $(".delete_check").prop('checked', false);
+      	    swal("Cancelled", "The album was unharmed", "error");
+        }
+      });
+    }
+  });
 });
+
+
+
+
+
 
 </script>

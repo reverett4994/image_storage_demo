@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :albums
+  resources :albums,param: :name
   devise_for :users
   resources :users, only: [:show]
   resources :images

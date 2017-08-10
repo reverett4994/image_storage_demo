@@ -60,3 +60,5 @@ gem 'has_friendship'
 gem 'high_voltage', '~> 3.0.0'
 
 gem 'will_paginate', '~> 3.1.0'
+
+gem 'sweetalert-rails'
