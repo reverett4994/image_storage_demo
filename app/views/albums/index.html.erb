@@ -23,6 +23,8 @@
 </table>
 
 <br>
+<%= link_to 'New Album', new_album_path %>
+
 
 <div id="album_gallery_wrapper">
   <h1>Listing Albums</h1>
@@ -30,14 +32,13 @@
       <% @albums.each do |album| %>
         <%= link_to(images_path(sort:album.id)) do %>
           <div class="album_link" id="<%=album.name.tr(" ", "_")%>">
+            <%= image_tag album.images.first.file.url,class:"album_icon" %>
             <p><%=album.name%></p>
-            <img src="/pictures.png" class="album_icon" style="visibility: hidden;">
           </div>
         <% end %>
       <% end %>
   <br>
 
-<%= link_to 'New Album', new_album_path %>
 </div>
 
 
@@ -54,6 +55,8 @@ $( "#delete_link" ).click(function() {
       );
     }
     console.log($(".delete_check").length);
+  }else{
+    $("form").remove();
   }
   $(".delete_check").change(function() {
     if(this.checked) {

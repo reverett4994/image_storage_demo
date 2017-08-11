@@ -517,7 +517,11 @@ span.text-content span {
   }
 }
 .album_icon{
-  max-width: 85%;
+  flex: 1;
+  height: 100%;
+  -webkit-filter: blur(3px);
+	filter: blur(2px);
+
 }
 .album_link{
   display: inline-block;
@@ -526,8 +530,13 @@ span.text-content span {
   margin: 10px;
   width: 45%;
   max-width: 450px;
+  height: 300px;
   background-size: 100%,100%;
   position:relative;
+  overflow: hidden;
+  justify-content: center;
+  display: inline-flex;
+  flex-direction: row;
   p{
     position: absolute;
     font-family: 'Montserrat', sans-serif;
