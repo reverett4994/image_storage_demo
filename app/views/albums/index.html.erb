@@ -1,38 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Albums</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @albums.each do |album| %>
-      <tr>
-        <td><%= album.name %></td>
-        <td><%= link_to 'Show', album %></td>
-        <td><%= link_to 'Edit', edit_album_path(album) %></td>
-        <td><%= link_to 'Destroy', album, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-<%= link_to 'New Album', new_album_path %>
 
 
 <div id="album_gallery_wrapper">
-  <h1>Listing Albums</h1>
+  <h1>Your Albums</h1>
+  <h3><%= link_to 'New Album', new_album_path, class:"new_album_link" %></h3>
   <a href="javascript:void(0)"id="delete_link"><h3>Delete Albums</h3></a>
       <% @albums.each do |album| %>
         <%= link_to(images_path(sort:album.id)) do %>
           <div class="album_link" id="<%=album.name.tr(" ", "_")%>">
-            <%= image_tag album.images.first.file.url,class:"album_icon" %>
+            <% if album.images.length >0 %>
+              <%= image_tag album.images.first.file.url,class:"album_icon" %>
+            <%else%>
+            <%= image_tag "pictures.png",class:"album_icon" %>
+            <%end%>
             <p><%=album.name%></p>
           </div>
         <% end %>
@@ -56,7 +38,7 @@ $( "#delete_link" ).click(function() {
     }
     console.log($(".delete_check").length);
   }else{
-    $("form").remove();
+
   }
   $(".delete_check").change(function() {
     if(this.checked) {

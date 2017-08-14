@@ -16,7 +16,6 @@ class AlbumsController < ApplicationController
   # GET /albums/1.json
   def show
     redirect_to images_path(sort:@album.id)
-
   end
 
   # GET /albums/new
@@ -34,7 +33,7 @@ class AlbumsController < ApplicationController
     @album = current_user.albums.build(album_params)
     respond_to do |format|
       if @album.save
-        format.html { redirect_to @album, notice: 'Album was successfully created.' }
+        format.html { redirect_to "/albums/#{@album.name}/add-images", notice: 'Album was successfully created.' }
         format.json { render :show, status: :created, location: @album }
       else
         format.html { render :new }
@@ -65,6 +64,18 @@ class AlbumsController < ApplicationController
       format.html { redirect_to albums_url, notice: 'Album was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def change_images
+    @album = Album.where("name LIKE ?",params[:name]).limit(1).last
+    @images= @album.images.paginate(:page => params[:page], :per_page => 3)
+    gon.album=@album.id
+  end
+
+  def add_images
+    @album = Album.where("name LIKE ?",params[:name]).limit(1).last
+    @images=current_user.images.paginate(:page => params[:page], :per_page => 3)
+    gon.album=@album.id
   end
 
   private

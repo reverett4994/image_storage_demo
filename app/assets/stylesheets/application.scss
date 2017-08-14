@@ -21,6 +21,11 @@ body{
   margin: 0;
   min-height: 100%;
 }
+h1 {
+  a{
+    color: white;
+  }
+}
 #header{
   margin: 0;
   padding: 10px;
@@ -394,6 +399,18 @@ span.text-content span {
   opacity: 0;
   font-size: 20px;
 }
+
+.edit_images_link{
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  margin-top: -35px;
+  margin-bottom: 50px;
+  font-size: 25px;
+}
 //**********************************************GALLERY************************************************//
 
 
@@ -558,10 +575,19 @@ span.text-content span {
       margin-bottom: 0;
     }
 
+    .new_album_link{
+      text-decoration: none;
+      color: white;
+    }
+
 
 //********************************************** ALBUM INDEX ************************************************//
 
 
+//********************************************** ALBUM EDIT IMAGES ************************************************//
+
+
+//********************************************** ALBUM EDIT IMAGES ************************************************//
 
 
 

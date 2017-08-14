@@ -50,6 +50,22 @@ class ImagesController < ApplicationController
     end
   end
 
+  def remove_album
+    @image=Image.find(params[:image])
+    @album=Album.find(params[:album])
+    @image.albums.delete(@album) unless @image.albums.include?(@album) == false
+    @album.images.delete(@image) unless @album.images.include?(@image) == false
+    respond_to do |format|
+      if @image.save && @album.save
+        format.html { redirect_to root_url, notice: 'error try again' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to root_url, notice: 'error try again' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
   # POST /images
   # POST /images.json
   def create

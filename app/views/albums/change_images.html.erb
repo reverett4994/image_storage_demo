@@ -1,28 +1,17 @@
 <div id="gallery_wrapper">
   <% if @album %>
-    <h1>All Images from <%=@album.name%> album </h1>
+  <h1>All Images from <%= link_to @album.name, images_path(sort:@album.id) %> album </h1>
   <%else%>
     <h1>Listing Images</h1>
   <%end%>
-  <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span> </a>
-  <% if @album%>
-    <a href="/albums/<%=@album.name%>/add-images" class="edit_images_link">Add images to album</a>
-    <a href="/albums/<%=@album.name%>/edit-images" class="edit_images_link">Remove images from album</a>
-  <%end%>
+  <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span></a>
   <div class="flickr_pagination">
     <%= will_paginate @images %>
   </div>
       <% @images.each do |image| %>
-        <%= link_to(image) do %>
-          <%= image_tag image.file.url,class:"gallery_image" %>
-
-          <% if image.private %>
-            <span class="text-content"><span>This Image is Private<br> Included in <%= image.albums.count%> Albums</span></span>
-          <%elsif image.only_friends %>
-            <span class="text-content"><span>This Image is for Friends Only <br> Included in <%= image.albums.count%> Albums</span></span>
-          <%else%>
-            <span class="text-content"><span>This Image is Public <br> Included in <%= image.albums.count%> Albums</span></span>
-          <%end%>
+        <%= link_to("#") do %>
+          <%= image_tag image.file.url,class:"gallery_image", id:"#{image.id}" %>
+            <span class="text-content"><span>Remove image from album</span></span>
         <% end %>
       <% end %>
       <div class="flickr_pagination">
@@ -43,6 +32,43 @@ $(function() {
     $(this).css({"margin-top": image-(image/2.25)});
   });
 });
+
+
+$( ".gallery_image" ).click(function() {
+  var album = gon.album
+  var image = this.id;
+  var image_thumb= this
+  swal({
+  title: "Are you sure?",
+  text: "Your image will be removed from this album",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#DD6B55",
+  confirmButtonText: "Yes, remove it!",
+  closeOnConfirm: false
+  },
+  function(){
+    $.ajax({
+      type: "POST",
+      url: "/images/remove-album",
+      dataType:"json",
+      data: {image:image,album:album },
+      success:function(data) {
+        console.log("good");
+        return false;
+      },
+      error:function(data) {
+        console.log("bad");
+        console.log(data);
+        return false;
+      }
+    });
+    $("#"+image).fadeOut()
+    swal("Removed!", "Your image was removed from this album.", "success");
+  });
+
+});
+
 
 
 $( ".btn" ).click(function() {
@@ -89,5 +115,8 @@ $( ".btn" ).click(function() {
 });
 
 
+
+$('.btn').trigger('click');
+$('.btn').hide();
 
 </script>
