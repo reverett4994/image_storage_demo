@@ -1,5 +1,7 @@
-<h1>New Album</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', albums_path %>
+<div id="wrapper">
+  <h1>Name Your New Album</h1>
+  <%= simple_form_for @album do |f| %>
+    <%= f.input :name, label: 'Name of the album', error: "Sorry thats taken, please choose another name that's unique", wrapper_html: { class: 'album_textbox' } %>
+    <%= f.button :submit %>
+  <% end %>
+</div>

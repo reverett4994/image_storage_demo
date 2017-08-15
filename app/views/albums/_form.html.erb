@@ -1,21 +1,6 @@
-<%= form_for(@album) do |f| %>
-  <% if @album.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@album.errors.count, "error") %> prohibited this album from being saved:</h2>
-
-      <ul>
-      <% @album.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+<div id="wrapper">
+  <%= simple_form_for @album do |f| %>
+    <%= f.input :name, label: 'Name of the album', error: "Sorry thats taken, please choose another name that's unique", wrapper_html: { class: 'album_textbox' } %>
+    <%= f.button :submit %>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

@@ -1,6 +1,6 @@
 <div id="gallery_wrapper">
   <% if @album %>
-  <h1>All Images from <%= link_to @album.name, images_path(sort:@album.id) %> album </h1>
+  <h1>Remove Images from the <%= link_to @album.name, images_path(sort:@album.id) %> album </h1>
   <%else%>
     <h1>Listing Images</h1>
   <%end%>
