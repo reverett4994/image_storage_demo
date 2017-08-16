@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require sweetalert
+//= require jquery.form-validator
 //= require_tree .

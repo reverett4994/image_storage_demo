@@ -1,0 +1,55 @@
+<div id="login_wrapper">
+  <div class="login_div">
+    <h1>Log in</h1>
+
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="form-inputs">
+        <%= f.label "E-Mail"%>
+        <%= f.text_field :email, wrapper_html: { class: 'login_textbox' } %>
+        <%= f.label "Password"%>
+        <%= f.password_field :password, required: false, wrapper_html: { class: 'login_textbox' } %>
+        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Log in" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="signup_div">
+    <h1>Sign up</h1>
+
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.label "E-Mail"%>
+        <%= f.text_field :email, data: { validation: 'email',validation_help:"must be a email address" } %>
+        <%= f.label "Password"%>
+        <%= f.password_field :password, data: { validation: 'strength',validation_strength: "2",validation_help:"please include at least one number and more than 8 characters" } %>
+        <%= f.label "Password Confirmation"%>
+        <%= f.password_field :password_confirmation, data: { validation: 'confirmation',validation_confirm:"user[password]",validation_help:"must match password entered previously"} %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Sign up" %>
+      </div>
+    <% end %>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>
+
+
+<script>
+  $.validate({
+    lang: 'en',
+    modules : 'security',
+    onSuccess : function($form) {
+
+    },
+    onError : function($form) {
+      sweetAlert("Opps!", "Something Was Wrong", "warning");
+      return false; // IF FALSE Will stop the submission of the form
+    }
+  });
+</script>
