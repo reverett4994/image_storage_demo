@@ -1,12 +1,9 @@
-<p id="notice"><%= notice %></p>
-
-
-
-
 <div id="album_gallery_wrapper">
   <h1>Your Albums</h1>
-  <h3><%= link_to 'New Album', new_album_path, class:"new_album_link" %></h3>
-  <a href="javascript:void(0)"id="delete_link"><h3>Delete Albums</h3></a>
+  <div class="album_btn_div">
+    <a href="/albums/new" class="fill_btn fill_btn--border fill_btn--primary fill_btn--animated "><h3><span>New Album</span></h3></a>
+    <a href="javascript:void(0)"id="delete_link"class="fill_btn fill_btn--border fill_btn--primary fill_btn--animated right"><h3><span>Delete Albums</span></h3></a>
+  </div>
       <% @albums.each do |album| %>
         <%= link_to(images_path(sort:album.id)) do %>
           <div class="album_link" id="<%=album.name.tr(" ", "_")%>">
@@ -24,13 +21,21 @@
 </div>
 
 
+
+
+
+
+
+
 <script>
 
 $( "#delete_link" ).click(function() {
   if ($(".check_text").length < 1) {
+    $(this).css("background-color", "#778899");
+    $(this).css("color", "white");
     var albums=gon.albums.split(",")
     for(var i = 0; i < albums.length; i++) {
-      $(this).append(
+      $(this).after(
         "<form action=''>\
           <input type='checkbox' class='delete_check 'name='album' value='"+albums[i]+"'><p class='check_text'>"+albums[i]+"</p>\
         </form>"
@@ -38,7 +43,10 @@ $( "#delete_link" ).click(function() {
     }
     console.log($(".delete_check").length);
   }else{
-
+    $(".check_text").remove();
+    $(".delete_check").remove();
+    $(this).css("background-color", "transparent");
+    $(this).css("color", "");
   }
   $(".delete_check").change(function() {
     if(this.checked) {
@@ -78,10 +86,4 @@ $( "#delete_link" ).click(function() {
     }
   });
 });
-
-
-
-
-
-
 </script>
