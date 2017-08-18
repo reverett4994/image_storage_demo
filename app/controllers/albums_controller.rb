@@ -4,12 +4,17 @@ class AlbumsController < ApplicationController
   # GET /albums
   # GET /albums.json
   def index
-    @albums = current_user.albums
-    gon.albums=""
-    current_user.albums.each do |a|
-      gon.albums+=a.name + ","
+    if user_signed_in?
+      @albums = current_user.albums
+      gon.albums=""
+      current_user.albums.each do |a|
+        gon.albums+=a.name + ","
+      end
+      gon.albums.chomp!(",")
+    else
+      redirect_to "/users/sign_in"
     end
-    gon.albums.chomp!(",")
+
   end
 
   # GET /albums/12

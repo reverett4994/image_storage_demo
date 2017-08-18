@@ -9,6 +9,7 @@
   <%= f.label "Private (only you)" %>
   <%= f.input_field :private, as: :boolean %><br>
   <%= f.button :submit %>
+  <div id="dZUpload" class="dropzone">
 <% end %>
 
 
@@ -16,4 +17,47 @@
 $('input[type="checkbox"]').on('change', function() {
    $('input[type="checkbox"]').not(this).prop('checked', false);
 });
+
+
+  $(document).ready(function () {
+
+    $.validate({
+      lang: 'en',
+      modules : 'security,html5',
+      onSuccess : function($form) {
+      },
+      onError : function($form) {
+        console.log("error");
+        sweetAlert("Opps!", "Something Was Wrong", "warning");
+        return false; // IF FALSE Will stop the submission of the form
+      }
+
+    });
+      Dropzone.autoDiscover = false;
+      $("#dZUpload").dropzone({
+          url: "/wallpaper/temp-pic",
+          dictDefaultMessage:"Drop wallpaper here or click to upload.",
+          addRemoveLinks: false,
+          maxFilesize:100,
+          autoProcessQueue:true,
+          maxFiles:1,
+          maxfilesexceeded: function(file) {
+              this.removeAllFiles();
+              this.addFile(file);
+          },
+          success: function (file, response) {
+            $(".btn").removeClass("disabled");
+            console.log(file);
+              var imgName = response;
+              file.previewElement.classList.add("dz-success");
+              console.log("Successfully uploaded :" + imgName);
+          },
+          error: function (file, response) {
+                        console.log(file);
+              file.previewElement.classList.add("dz-error");
+              console.log(response);
+          }
+      });
+  });
+
 </script>

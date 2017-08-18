@@ -4,14 +4,18 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    if params[:sort]
-      @album=Album.find(params[:sort])
-      @images=@album.images.paginate(:page => params[:page], :per_page => 3)
-    elsif params[:user]
-      @u=User.find(params[:user])
-      @images=@u.images.paginate(:page => params[:page], :per_page => 3)
+    if user_signed_in?
+      if params[:sort]
+        @album=Album.find(params[:sort])
+        @images=@album.images.paginate(:page => params[:page], :per_page => 3)
+      elsif params[:user]
+        @u=User.find(params[:user])
+        @images=@u.images.paginate(:page => params[:page], :per_page => 3)
+      else
+        @images = current_user.images.paginate(:page => params[:page], :per_page => 3)
+      end
     else
-      @images = current_user.images.paginate(:page => params[:page], :per_page => 3)
+      @images = Image.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
     end
   end
 

@@ -64,3 +64,5 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'sweetalert-rails'
 
 gem 'jquery-form-validator-rails'
+
+gem 'dropzonejs-rails'

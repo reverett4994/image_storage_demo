@@ -1,9 +1,15 @@
 <div id="gallery_wrapper">
   <% if @album %>
     <h1>All Images from <%=@album.name%> album </h1>
+    <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
+  <%elsif user_signed_in? == false%>
+    <h1>Newist Public Images</h1>
   <%else%>
-    <h1>Listing Images</h1>
+    <h1>Your Images</h1>
+    <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
   <%end%>
+
+
   <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span> </a>
   <% if @album%>
     <a href="/albums/<%=@album.name%>/add-images" class="edit_images_link">Add images to album</a>
@@ -31,7 +37,6 @@
 
   <br>
 
-  <%= link_to 'New Image', new_image_path %>
 </div>
 
 

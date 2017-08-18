@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require sweetalert
+ *= require dropzone/dropzone
  *= require_self
  */
 html{
@@ -416,6 +417,19 @@ span.text-content span {
   margin-bottom: 50px;
   font-size: 25px;
 }
+
+.new_image_link{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin: 50px;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  font-size: 25px;
+  width: auto;
+}
 //**********************************************GALLERY************************************************//
 
 
@@ -454,6 +468,21 @@ span.text-content span {
 
 
 //**********************************************SHOW IMAGE************************************************//
+
+//**********************************************NEW IMAGE************************************************//
+
+#dZUpload{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 275px;
+  color: #646C7F;
+  font-size: 19px;
+  font-family: 'Exo 2', sans-serif;
+  border-radius: 5px;
+  border: 5px solid blue;
+}
+//**********************************************NEW IMAGE************************************************//
 
 
 //********************************************** SELECT BOX ************************************************//
@@ -831,7 +860,7 @@ span.text-content span {
 
       }
       .right {
-        
+
       }
     }
 
