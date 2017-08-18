@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
 
   # GET /images
   # GET /images.json
@@ -73,7 +74,8 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    @image = current_user.images.build(image_params)
+    @image = current_user.images.build(image_params.merge(file:current_user.temp_pic))
+
 
     respond_to do |format|
       if @image.save
@@ -109,6 +111,16 @@ class ImagesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def temp_pic
+  @user=current_user
+  @user.temp_pic=params[:file]
+  @user.save
+  respond_to do |format|
+      format.html {  }
+      format.json { render json:" @image.errors, status: :unprocessable_entity "}
+  end
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.

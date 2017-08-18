@@ -1,7 +1,7 @@
 
 <%= simple_form_for @image do |f| %>
   <%= f.input :name%>
-  <%= f.input :file, as: :file %>
+
   <%= f.label "Public (Everybody)" %>
   <%= f.input_field :public, as: :boolean %><br>
   <%= f.label "Friends and You Only" %>
@@ -9,7 +9,7 @@
   <%= f.label "Private (only you)" %>
   <%= f.input_field :private, as: :boolean %><br>
   <%= f.button :submit %>
-  <div id="dZUpload" class="dropzone">
+  <div id="dZUpload" class="dropzone"></div>
 <% end %>
 
 
@@ -17,7 +17,7 @@
 $('input[type="checkbox"]').on('change', function() {
    $('input[type="checkbox"]').not(this).prop('checked', false);
 });
-
+Dropzone.autoDiscover = false;
 
   $(document).ready(function () {
 
@@ -33,10 +33,10 @@ $('input[type="checkbox"]').on('change', function() {
       }
 
     });
-      Dropzone.autoDiscover = false;
-      $("#dZUpload").dropzone({
-          url: "/wallpaper/temp-pic",
-          dictDefaultMessage:"Drop wallpaper here or click to upload.",
+
+      var myDropzone = new Dropzone("#dZUpload",{
+          url: "/images/temp-pic",
+          dictDefaultMessage:"Drop Image here or click to upload.",
           addRemoveLinks: false,
           maxFilesize:100,
           autoProcessQueue:true,

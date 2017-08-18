@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523072759) do
+ActiveRecord::Schema.define(version: 20170818072330) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -64,6 +64,10 @@ ActiveRecord::Schema.define(version: 20170523072759) do
     t.datetime "updated_at",                                      null: false
     t.integer  "failed_attempts",        limit: 4,   default: 0,  null: false
     t.datetime "locked_at"
+    t.string   "temp_pic_file_name",     limit: 255
+    t.string   "temp_pic_content_type",  limit: 255
+    t.integer  "temp_pic_file_size",     limit: 4
+    t.datetime "temp_pic_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
