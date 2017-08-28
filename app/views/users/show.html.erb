@@ -1,39 +1,40 @@
-<h1> USER: <%=@user.email%>'s PAGE </h1>
+<div id="user_page_wrapper">
+  <h1> <%=@user.email%>'s PAGE </h1>
 
 
-<% if user_signed_in? %>
-   <% if current_user == @user %>
-      <h4>Welcome to Your Page</h4>
+  <% if user_signed_in? %>
+     <% if current_user == @user %>
+        <h4>Welcome to Your Page</h4>
 
-      <h4>Your Friends </h4>
-      <% @user.friends.each do |u| %>
-        <%= link_to u.email,"/users/#{u.id}" %> <br>
-      <%end%>
-      <h4>Your Pending Friend Requests </h4>
-      <% @user.pending_friends.each do |u| %>
-        <%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button><br>
-      <%end%>
+        <h4>Your Friends </h4>
+        <% @user.friends.each do |u| %>
+          <%= link_to u.email,"/users/#{u.id}" %> <br>
+        <%end%>
+        <h4>Your Pending Friend Requests </h4>
+        <% @user.pending_friends.each do |u| %>
+          <%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button><br>
+        <%end%>
 
-      <h4>Your Requested Friends</h4>
-      <% @user.requested_friends.each do |u| %>
-        <%=u.email%><br>
-      <%end%>
-      <a href="/images" class="btn btn-4"><span>My Pictures</span></a><br>
+        <h4>Your Requested Friends</h4>
+        <% @user.requested_friends.each do |u| %>
+          <%=u.email%><br>
+        <%end%>
+        <a href="/images" class="btn btn-4"><span>My Pictures</span></a><br>
 
-      <a href="/albums" class="btn btn-4"><span>My Albums</span></a>
-   <% elsif current_user.pending_friends.include?(@user)%>
-      <h4> Friend Request Pending</h4>
-    <%else%>
-      <button type="button" class="request">Request Friendship!</button>
-   <%end%>
-<%end%>
+        <a href="/albums" class="btn btn-4"><span>My Albums</span></a>
+     <% elsif current_user.pending_friends.include?(@user)%>
+        <h4> Friend Request Pending</h4>
+      <%else%>
+        <button type="button" class="request">Request Friendship!</button>
+     <%end%>
+  <%end%>
 
-<% if  user_signed_in? == false  || current_user != @user%>
-  <%= link_to "#{@user.email} Pictures",images_path(:user => @user.id)%><br>
-  <a href="/albums" class=""><span><%=@user.email%> Albums</span></a>
-<%end%>
+  <% if  user_signed_in? == false  || current_user != @user%>
+    <%= link_to "#{@user.email} Pictures",images_path(:user => @user.id)%><br>
+    <a href="/albums" class=""><span><%=@user.email%> Albums</span></a>
+  <%end%>
 
-
+</div>
 <script>
 
 $( ".request" ).click(function() {
