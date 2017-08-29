@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     gon.user=@user.id
+    @public_count=@user.images.where("public LIKE true").count
+    @pfriends_count=@user.images.where("only_friends LIKE true").count
+    @private_count=@user.images.where("private LIKE true").count
+
   end
 
   def request_friend
