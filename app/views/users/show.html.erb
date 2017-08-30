@@ -7,13 +7,13 @@
       <div class="banner_pic"><img src="/BWuser.png"></div>
       <div class="banner_user"><%=@user.email[/[^@]+/]%>'s <br>Page</div>
       <div class="banner_item"><h6>Total Images</h6><p><%=@user.images.count%></p></div>
-      <div class="banner_item"><h6>Public Images</h6><p><%=@public_count.to_i%></p></div>
-      <div class="banner_item"><h6>Friends Only Images</h6><p><%=@friends_count.to_i%></p></div>
-      <div class="banner_item"><h6>Private Images</h6><p><%=@private_count.to_i%></p></div>
+      <div class="banner_item"><h6>Public Images</h6><p><%=@public_count%></p></div>
+      <div class="banner_item"><h6>Friends Only Images</h6><p><%=@friends_count%></p></div>
+      <div class="banner_item"><h6>Private Images</h6><p><%=@private_count%></p></div>
+      <div class="banner_item"><h6>Friends</h6><p><%=@user.friends.count.to_i%></p></div>
     </div>
-     <% if current_user == @user %>
-        <h4>Welcome to Your Page</h4>
 
+     <% if current_user == @user %>
         <h4>Your Friends </h4>
         <% @user.friends.each do |u| %>
           <%= link_to u.email,"/users/#{u.id}" %> <br>
@@ -22,11 +22,42 @@
         <% @user.pending_friends.each do |u| %>
           <%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button><br>
         <%end%>
-
         <h4>Your Requested Friends</h4>
         <% @user.requested_friends.each do |u| %>
           <%=u.email%><br>
         <%end%>
+
+        <div id="friends_banner">
+          <h1>Your Friends</h1>
+          <div class="friends_banner_sub">
+            <h1>Current Friends: <%=@user.friends.count.to_i%></h1>
+            <ul>
+              <% @user.friends.each do |u| %>
+                <li><%= link_to u.email,"/users/#{u.id}" %></li> <br>
+              <%end%>
+            </ul>
+          </div>
+          <div class="friends_banner_sub">
+            <h1>Pending Friends: <%=@user.pending_friends.count.to_i%></h1>
+            <ul>
+              <% @user.pending_friends.each do |u| %>
+                <li><%= link_to u.email,"/users/#{u.id}" %></li> <br>
+              <%end%>
+            </ul>
+          </div>
+          <div class="friends_banner_sub">
+            <h1>Requested Friends: <%=@user.requested_friends.count.to_i%></h1>
+            <ul>
+              <% @user.requested_friends.each do |u| %>
+                <li><%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button> <br>
+              <%end%>
+            </ul>
+          </div>
+        </div>
+
+        <h1>Make a New Friend!</h1>
+        Your new friends Email: <input type="text" name="friend_email" value="" placeholder="example@example.com" id="friend_txt">
+        <button class="new_friend_btn">Blue</button>
         <a href="/images" class="btn btn-4"><span>My Pictures</span></a><br>
 
         <a href="/albums" class="btn btn-4"><span>My Albums</span></a>
@@ -89,5 +120,37 @@ $( ".accept" ).click(function() {
       return false;
     }
   });
+});
+
+
+$( ".friends_banner_sub h1" ).click(function() {
+  console.log($("#friends_banner").height());
+  if($("#friends_banner").height()==200){
+    $("#friends_banner").animate({height: "500px"});
+  }else{
+    $("#friends_banner").animate({height: "200px"});
+  }
+});
+
+$( ".new_friend_btn" ).click(function() {
+  var friend = $("#friend_txt").val();
+  console.log(friend);
+  $.ajax({
+    type: "POST",
+    url: "/users/request-friend",
+    dataType:"json",
+    data: {friend:friend},
+    success:function(data) {
+      console.log("good");
+      alert("request sent!")
+      return false;
+    },
+    error:function(data) {
+      console.log("bad");
+      console.log(data);
+      return false;
+    }
+  });
+
 });
 </script>
