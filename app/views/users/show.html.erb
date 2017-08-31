@@ -39,25 +39,27 @@
           </div>
           <div class="friends_banner_sub">
             <h1>Pending Friends: <%=@user.pending_friends.count.to_i%></h1>
-            <ul>
+            <ul class="pending_ul">
               <% @user.pending_friends.each do |u| %>
-                <li><%= link_to u.email,"/users/#{u.id}" %></li> <br>
+                <li class="pending_li"><%= link_to u.email,"/users/#{u.id}" %></li> <br>
               <%end%>
             </ul>
           </div>
           <div class="friends_banner_sub">
             <h1>Requested Friends: <%=@user.requested_friends.count.to_i%></h1>
-            <ul>
+            <ul class="requested_ul">
               <% @user.requested_friends.each do |u| %>
-                <li><%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button> <br>
+                <li class="requested_li"><%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button> <br>
               <%end%>
             </ul>
           </div>
         </div>
+        <div id="new_friend_div">
+          <h1>Make a New Friend!</h1>
+          <p>Your new friends Email:</p> <input type="text" name="friend_email" value="" placeholder="example@example.com" id="friend_txt">
+          <button class="new_friend_btn">Send Request</button>
+        </div>
 
-        <h1>Make a New Friend!</h1>
-        Your new friends Email: <input type="text" name="friend_email" value="" placeholder="example@example.com" id="friend_txt">
-        <button class="new_friend_btn">Blue</button>
         <a href="/images" class="btn btn-4"><span>My Pictures</span></a><br>
 
         <a href="/albums" class="btn btn-4"><span>My Albums</span></a>
@@ -141,16 +143,23 @@ $( ".new_friend_btn" ).click(function() {
     dataType:"json",
     data: {friend:friend},
     success:function(data) {
-      console.log("good");
+
+      console.log(Object.values(data)[0]);
+      var id=Object.values(data)[0]
+      var email= Object.values(data)[1]
+      // append li in ul
+      $("ul").append('<li class="pending_li"><a href="/users/' +id.toString()+ '>'+email.toString()+'</a></li>');
       alert("request sent!")
       return false;
     },
     error:function(data) {
       console.log("bad");
       console.log(data);
+      alert("Error Occurred! Please make sure there is a user using the Email entered.")
       return false;
     }
   });
 
 });
+
 </script>
