@@ -143,14 +143,20 @@ $( ".new_friend_btn" ).click(function() {
     dataType:"json",
     data: {friend:friend},
     success:function(data) {
-
-      console.log(Object.values(data)[0]);
       var id=Object.values(data)[0]
       var email= Object.values(data)[1]
-      // append li in ul
-      $("ul").append('<li class="pending_li"><a href="/users/' +id.toString()+ '>'+email.toString()+'</a></li>');
-      alert("request sent!")
-      return false;
+      var status= Object.values(data)[2]
+      console.log(status);
+      if (status==500){
+        alert("request was already sent or is already a friend!")
+      }else if (status==400){
+        alert("They have already asked you to be their friend! Just accept their request.")
+      } else{
+        // append li in ul
+        $(".pending_ul").append('<li><a href="/users/' +id.toString()+ '">'+email.toString()+'</a></li>');
+        alert("request sent!")
+        return false;
+      }
     },
     error:function(data) {
       console.log("bad");

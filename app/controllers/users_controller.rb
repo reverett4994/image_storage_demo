@@ -17,15 +17,27 @@ class UsersController < ApplicationController
       @friend= User.where("email LIKE ?",params[:friend])
       @friend=@friend.last
     end
-    current_user.friend_request(@friend)
+    if current_user.pending_friends.include?(@friend) || current_user.friends.include?(@friend)
+      respond_to do |format|
+        format.html { redirect_to root_url, notice: 'error try again' }
+        format.json { render :json => { :id => "Already Pending", :email => "Already Pending",:status_code => "500" } }
+       end
+     elsif current_user.requested_friends.include?(@friend)
+       respond_to do |format|
+         format.html { redirect_to root_url, notice: 'error try again' }
+         format.json { render :json => { :id => "Already Pending", :email => "Already Pending",:status_code => "400" } }
+        end
+    else
+      current_user.friend_request(@friend)
 
-    respond_to do |format|
-      if user_signed_in?
-        format.html { redirect_to root_url, notice: 'error try again' }
-        format.json { render :json => { :id => "#{@friend.id}", :email => "#{@friend.email}",:status_code => "200" } }
-      else
-        format.html { redirect_to root_url, notice: 'error try again' }
-        format.json { render json: "sdfsdf" }
+      respond_to do |format|
+        if user_signed_in?
+          format.html { redirect_to root_url, notice: 'error try again' }
+          format.json { render :json => { :id => "#{@friend.id}", :email => "#{@friend.email}",:status_code => "200" } }
+        else
+          format.html { redirect_to root_url, notice: 'error try again' }
+          format.json { render json: "sdfsdf" }
+        end
       end
     end
   end
@@ -45,5 +57,4 @@ class UsersController < ApplicationController
       end
     end
   end
-
 end
