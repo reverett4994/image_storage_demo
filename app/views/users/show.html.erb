@@ -30,15 +30,15 @@
         <div id="friends_banner">
           <h1>Your Friends</h1>
           <div class="friends_banner_sub">
-            <h1>Current Friends: <%=@user.friends.count.to_i%></h1>
-            <ul>
+            <h1>Current Friends: <div class ='friends_count'><%=@user.friends.count.to_i%></div class ='friends_count'></h1>
+            <ul class="friends_ul">
               <% @user.friends.each do |u| %>
                 <li><%= link_to u.email,"/users/#{u.id}" %></li> <br>
               <%end%>
             </ul>
           </div>
           <div class="friends_banner_sub">
-            <h1>Pending Friends: <%=@user.pending_friends.count.to_i%></h1>
+            <h1>Pending Friends: <div class="pending_count"><%=@user.pending_friends.count.to_i%></div class="pending_count"></h1>
             <ul class="pending_ul">
               <% @user.pending_friends.each do |u| %>
                 <li class="pending_li"><%= link_to u.email,"/users/#{u.id}" %></li> <br>
@@ -46,7 +46,7 @@
             </ul>
           </div>
           <div class="friends_banner_sub">
-            <h1>Requested Friends: <%=@user.requested_friends.count.to_i%></h1>
+            <h1>Requested Friends: <div class="requested_count"><%=@user.requested_friends.count.to_i%></div class="requested_count"></h1>
             <ul class="requested_ul">
               <% @user.requested_friends.each do |u| %>
                 <li class="requested_li"><%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button> <br>
@@ -104,6 +104,7 @@ $( ".request" ).click(function() {
 
 $( ".accept" ).click(function() {
   var friend = $(this).val();
+  var Clicked= $(this)
   console.log(friend);
 
   $.ajax({
@@ -112,6 +113,13 @@ $( ".accept" ).click(function() {
     dataType:"json",
     data: {friend:friend},
     success:function(data) {
+      var id=Object.values(data)[0]
+      var email= Object.values(data)[1]
+      var status= Object.values(data)[2]
+      Clicked.parent().remove()
+      $(".friends_ul").append('<li><a href="/users/' +id.toString()+ '">'+email.toString()+'</a></li>');
+      $(".friends_count").text( parseInt( $(".friends_count").text() )+1 );parseInt()
+      $(".requested_count").text( parseInt( $(".requested_count").text() )-1 );parseInt()
       console.log("good");
       alert("Friend Added!")
       return false;
@@ -154,6 +162,7 @@ $( ".new_friend_btn" ).click(function() {
       } else{
         // append li in ul
         $(".pending_ul").append('<li><a href="/users/' +id.toString()+ '">'+email.toString()+'</a></li>');
+        $(".pending_count").text( parseInt( $(".pending_count").text() )+1 );parseInt()
         alert("request sent!")
         return false;
       }
@@ -167,5 +176,7 @@ $( ".new_friend_btn" ).click(function() {
   });
 
 });
+
+
 
 </script>

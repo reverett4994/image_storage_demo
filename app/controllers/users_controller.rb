@@ -50,7 +50,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if user_signed_in?
         format.html { redirect_to root_url, notice: 'error try again' }
-        format.json { head :no_content }
+        format.json { render :json => { :id => "#{@friend.id}", :email => "#{@friend.email}",:status_code => "200" } }
       else
         format.html { redirect_to root_url, notice: 'error try again' }
         format.json { head :no_content }
