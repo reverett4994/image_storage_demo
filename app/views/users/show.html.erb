@@ -14,42 +14,50 @@
     </div>
 
      <% if current_user == @user %>
-        <h4>Your Friends </h4>
-        <% @user.friends.each do |u| %>
-          <%= link_to u.email,"/users/#{u.id}" %> <br>
-        <%end%>
-        <h4>Your Pending Friend Requests </h4>
-        <% @user.pending_friends.each do |u| %>
-          <%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button><br>
-        <%end%>
-        <h4>Your Requested Friends</h4>
-        <% @user.requested_friends.each do |u| %>
-          <%=u.email%><br>
-        <%end%>
-
         <div id="friends_banner">
           <h1>Your Friends</h1>
           <div class="friends_banner_sub">
             <h1>Current Friends: <div class ='friends_count'><%=@user.friends.count.to_i%></div class ='friends_count'></h1>
             <ul class="friends_ul">
-              <% @user.friends.each do |u| %>
+              <% @user.friends.first(5).each do |u| %>
                 <li><%= link_to u.email,"/users/#{u.id}" %></li> <br>
+              <%end%>
+              <% if @user.friends.count > 5 %>
+                 <li><a href="#">See the rest of your friends!</a> </li>
+              <% elsif @user.friends.count == 0 %>
+                  <li>You have no friends! :(</li>
+               <% else %>
+               <li>Thats all your friends!</li>
               <%end%>
             </ul>
           </div>
           <div class="friends_banner_sub">
             <h1>Pending Friends: <div class="pending_count"><%=@user.pending_friends.count.to_i%></div class="pending_count"></h1>
             <ul class="pending_ul">
-              <% @user.pending_friends.each do |u| %>
+              <% @user.pending_friends.first(5).each do |u| %>
                 <li class="pending_li"><%= link_to u.email,"/users/#{u.id}" %></li> <br>
+              <%end%>
+              <% if @user.pending_friends.count > 5 %>
+                 <li><a href="#">See the rest of your pending friends!</a> </li>
+             <% elsif @user.pending_friends.count == 0 %>
+                 <li>You have no pending friends!</li>
+               <% else %>
+               <li>Thats all your pending friends!</li>
               <%end%>
             </ul>
           </div>
           <div class="friends_banner_sub">
             <h1>Requested Friends: <div class="requested_count"><%=@user.requested_friends.count.to_i%></div class="requested_count"></h1>
             <ul class="requested_ul">
-              <% @user.requested_friends.each do |u| %>
+              <% @user.requested_friends.first(5).each do |u| %>
                 <li class="requested_li"><%=u.email%> <button class="accept" value=<%=u.email%>>Accept Friend</button> <br>
+              <%end%>
+              <% if @user.requested_friends.count > 5 %>
+                 <li><a href="#">See the rest of your requested friends!</a> </li>
+             <% elsif @user.requested_friends.count == 0 %>
+                 <li>You have no requested friends!</li>
+               <% else %>
+               <li>Thats all your requested friends!</li>
               <%end%>
             </ul>
           </div>
@@ -60,9 +68,52 @@
           <button class="new_friend_btn">Send Request</button>
         </div>
 
-        <a href="/images" class="btn btn-4"><span>My Pictures</span></a><br>
+        <div id="user_banner">
+          <div class="banner_pic"><img src="/BWuser.png"></div>
+          <div class="banner_user"><%=@user.email[/[^@]+/]%>'s <br>Images</div>
+          <div class="banner_item"><h6>Total Images</h6><p><%=@user.images.count%></p></div>
+          <div class="banner_item"><h6>Public Images</h6><p><%=@public_count%></p></div>
+          <div class="banner_item"><h6>Friends Only Images</h6><p><%=@friends_count%></p></div>
+          <div class="banner_item"><h6>Private Images</h6><p><%=@private_count%></p></div>
+        </div>
+        <div id="profile_gallery_image_wrapper">
+          <h1>Most Recent Images</h1>
+          <% @user.images.last(8).each do |image| %>
+            <%= link_to(image) do %>
+              <%= image_tag image.file.url,class:"profile_gallery_image" %>
+            <% end %>
+          <% end %>
+
+          <a href="/images" class="btn btn-4"><span>See All My Pictures</span></a><br>
+        </div>
+
+        <div id="albums_banner">
+          <h1>Your Albums</h1>
+          <div class="albums_banner_sub">
+            <a href="/albums/new" class="album_banner_link">New Album</a>
+          </div>
+          <div class="albums_banner_sub">
+            <h1>Current Albums: <%=@user.albums.count.to_i%></h1>
+            <ul class="pending_ul">
+              <% @user.albums.first(5).each do |u| %>
+                <li class="pending_li"><%= link_to u.name,"/albums/#{u.name}" %></li> <br>
+              <%end%>
+              <% if @user.albums.count > 5 %>
+                 <li><a href="/albums">See the rest of your pending friends!</a> </li>
+             <% elsif @user.albums.count == 0 %>
+                 <li>You have no albums!</li>
+             <% else %>
+                 <li>Thats all your albums!</li>
+              <%end%>
+            </ul>
+          </div>
+          <div class="albums_banner_sub">
+            <a href="/albums" class="album_banner_link">Delete Album</a>
+          </div>
+        </div>
 
         <a href="/albums" class="btn btn-4"><span>My Albums</span></a>
+
      <% elsif current_user.pending_friends.include?(@user)%>
         <h4> Friend Request Pending</h4>
       <%else%>
@@ -136,7 +187,7 @@ $( ".accept" ).click(function() {
 $( ".friends_banner_sub h1" ).click(function() {
   console.log($("#friends_banner").height());
   if($("#friends_banner").height()==200){
-    $("#friends_banner").animate({height: "500px"});
+    $("#friends_banner").animate({height: "400px"});
   }else{
     $("#friends_banner").animate({height: "200px"});
   }
@@ -177,6 +228,13 @@ $( ".new_friend_btn" ).click(function() {
 
 });
 
-
+$( ".albums_banner_sub h1" ).click(function() {
+  console.log($("#albums_banner").height());
+  if($("#albums_banner").height()==200){
+    $("#albums_banner").animate({height: "400px"});
+  }else{
+    $("#albums_banner").animate({height: "200px"});
+  }
+});
 
 </script>

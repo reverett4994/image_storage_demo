@@ -863,6 +863,15 @@ span.text-content span {
       font-family: 'Fjalla One', sans-serif;
       text-align: center;
     }
+    ul{
+      list-style: none;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      li a{
+        color: black;
+        text-decoration: underline;
+      }
+    }
   }
 
   #user_banner{
@@ -983,6 +992,68 @@ span.text-content span {
 }
 .requested_count{
   display: inline-block;
+}
+
+#profile_gallery_image_wrapper{
+  margin-left: auto;
+  margin-right: auto;
+  padding: 100px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);;
+}
+.profile_gallery_image{
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+#albums_banner{
+  width: 100%;
+  height: 200px;
+  border-bottom: 3px solid black;
+  background-color: #f3f3f1;
+  padding: 10px;
+  padding-left: 0;
+  padding-right: 0;
+  overflow: hidden;
+  h1{
+    text-align: center;
+    margin-top: 0;
+    font-family: 'Fjalla One', sans-serif;
+    letter-spacing: 1.5px;
+    font-weight: normal;
+  }
+}
+
+.albums_banner_sub{
+  width: 33.1%;
+  float: left;
+  border: 1px solid black;
+  height: 80%;
+  h1{
+    text-align: center;
+    margin-top: 0;
+    font-family: 'Fjalla One', sans-serif;
+    font-weight: normal;
+    text-decoration: underline;
+    font-size: 20px;
+  }
+}
+
+.album_banner_link{
+  text-align: center;
+  margin-top: 0;
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: normal;
+  text-decoration: underline;
+  font-size: 36px;
+  text-decoration: underline;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  color: black;
 }
     //********************************************** USER PAGE ************************************************//
 
