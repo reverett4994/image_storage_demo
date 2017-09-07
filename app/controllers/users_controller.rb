@@ -1,6 +1,17 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  def change_email
+    @user=current_user
+    if @user.valid_password?(params[:password])
+      @user.email=params[:new_email]
+      @user.save
+      redirect_to "/"
+    else
+      flash[:alert] = "Wrong Password"
+    end
+
+  end
   def show
     @user = User.find(params[:id])
     gon.user=@user.id

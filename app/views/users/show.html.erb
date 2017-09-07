@@ -6,11 +6,10 @@
     <div id="user_banner">
       <div class="banner_pic"><img src="/BWuser.png"></div>
       <div class="banner_user"><%=@user.email[/[^@]+/]%>'s <br>Page</div>
+      <div class="banner_item"><h6>User Since</h6><p><%=@user.created_at.to_formatted_s(:concise) %></p></div>
       <div class="banner_item"><h6>Total Images</h6><p><%=@user.images.count%></p></div>
-      <div class="banner_item"><h6>Public Images</h6><p><%=@public_count%></p></div>
-      <div class="banner_item"><h6>Friends Only Images</h6><p><%=@friends_count%></p></div>
-      <div class="banner_item"><h6>Private Images</h6><p><%=@private_count%></p></div>
-      <div class="banner_item"><h6>Friends</h6><p><%=@user.friends.count.to_i%></p></div>
+      <div class="banner_item"><h6>Total Albums</h6><p><%=@user.albums.count%></p></div>
+      <div class="banner_item"><h6>Total Friends</h6><p><%=@user.friends.count.to_i%></p></div>
     </div>
 
      <% if current_user == @user %>
@@ -113,6 +112,14 @@
         </div>
 
         <a href="/albums" class="btn btn-4"><span>My Albums</span></a>
+
+        <div id="user_banner">
+          <div class="banner_pic"><img src="/BWuser.png"></div>
+          <div class="banner_user"><%=@user.email[/[^@]+/]%>'s <br>Settings</div>
+          <div class="banner_item"><h6>Change your Email</h6><p><a href="/user/change-email">Change your email</a></p></div>
+          <div class="banner_item"><h6>Change your password</h6><%= link_to "Change your password", edit_user_registration_path %><br></p></div>
+          <div class="banner_item"><h6>Delete your account</h6><p>Delete your account</p></div>
+        </div>
 
      <% elsif current_user.pending_friends.include?(@user)%>
         <h4> Friend Request Pending</h4>

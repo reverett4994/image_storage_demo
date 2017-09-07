@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get 'albums/:name/add-images' => 'albums#add_images'
       post 'images/remove-album' => 'images#remove_album'
       post 'images/temp-pic'=>'images#temp_pic'
+      get 'user/change-email'=>'users#change_email'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
