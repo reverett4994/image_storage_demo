@@ -41,7 +41,6 @@
 
 
 <script>
-
 $(function() {
   $( ".text-content" ).each(function() {
     var image= ($(this).siblings().height()) * -1
@@ -52,7 +51,7 @@ $(function() {
 
 $( ".btn" ).click(function() {
   if ( $(".gallery_image").width()=="1200" ){
-
+    document.cookie = "size=small";
     $(".gallery_image").width("500px")
     $(".gallery_image").height("500px")
     $(".gallery_image").css("display","inline-block")
@@ -65,6 +64,7 @@ $( ".btn" ).click(function() {
       $(this).css({"margin-left":image.left+130});
     });
   }else{
+    document.cookie = "size=big";
     $(".gallery_image").width("1200px");
     $(".gallery_image").height("auto");
     $(".gallery_image").css("display","block");
@@ -94,5 +94,32 @@ $( ".btn" ).click(function() {
 });
 
 
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
 
+
+window.onload = function() {
+  var image_size = readCookie('size');
+  console.log(image_size); // Outputs: "The value of my cookie..."
+  if (image_size=="small"){
+    $(".gallery_image").width("500px")
+    $(".gallery_image").height("500px")
+    $(".gallery_image").css("display","inline-block")
+    $(".gallery_image").css("object-fit","cover")
+    $(".gallery_image").css("object-position","50% 20%")
+    $( ".text-content" ).each(function() {
+      var image= $(this).siblings().position();
+      $(this).css({"margin-top":"-300px"});
+      $(this).css({"margin-left":image.left+130});
+    });
+  };
+};
 </script>

@@ -16,6 +16,12 @@
          <div class="banner_item"><h6>Total Albums</h6><p><%=@user.albums.count%></p></div>
          <div class="banner_item"><h6>Total Friends</h6><p><%=@user.friends.count.to_i%></p></div>
        </div>
+       <div id="quick_access">
+         <h1>Quick Access</h1>
+         <a href="/images" class="btn btn-4 user_page_btn inline"><span>Your Pictures</span></a>
+         <a href="/albums" class="btn btn-4 user_page_btn inline"><span>Your Albums</span></a>
+         <a href="/user/friends" class="btn btn-4 user_page_btn inline"><span>Your Friends</span></a>
+       </div>
         <div id="friends_banner">
           <h1>Your Friends</h1>
           <div class="friends_banner_sub">

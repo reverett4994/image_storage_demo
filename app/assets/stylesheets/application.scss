@@ -882,6 +882,7 @@ span.text-content span {
     padding: 10px;
     color: white;
     margin-top: 50px;
+    font-family: 'Montserrat', sans-serif;
   }
     .banner_pic{
       display: inline-block;
@@ -921,18 +922,34 @@ span.text-content span {
       margin-left: 30px;
     }
   }
+  #quick_access{
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);;
+    padding-top: 40px;
+    padding-bottom: 75px;
+
+    h1{
+      color: white;
+      text-align: center;
+      font-size: 36px;
+      font-family: 'Fjalla One';
+      margin-bottom: 0;
+    }
+  }
+  .inline{
+    display: inline-block;
+  }
   //font-family: 'Montserrat', sans-serif;
 
   #friends_banner{
     width: 100%;
     height: 200px;
     border-bottom: 3px solid black;
-    background-color:rgba(255, 255, 0, 0.6);
+    background-color:rgba(255, 255, 255, 0.6);
     padding: 10px;
     padding-left: 0;
     padding-right: 0;
     overflow: hidden;
-    margin-top: 75px;
     h1{
       text-align: center;
       margin-top: 0;
@@ -1016,7 +1033,7 @@ span.text-content span {
   width: 100%;
   height: 200px;
   border-bottom: 3px solid black;
-  background-color:rgba(0, 255, 0, 0.6);
+  background-color:rgba(255, 255, 255, 0.6);
   padding: 10px;
   padding-left: 0;
   padding-right: 0;
@@ -1072,8 +1089,36 @@ span.text-content span {
 .user_page_btn{
   margin-top: 50px;
 }
+
     //********************************************** USER PAGE ************************************************//
 
+    //********************************************** FRIENDS PAGE ************************************************//
+
+    //font-family: 'Fjalla One', sans-serif;
+
+    #friends_page{
+      text-align: center;
+      margin-top: 100px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    #friends_list{
+      text-align: left;
+      margin-left: auto;
+      margin-right: auto;
+      display: inline-block;
+      p{
+        padding-bottom: 7px;
+        border-bottom: .1px solid #ccc;
+      }
+    }
+    .delete_icon{
+      width: 25px;
+      margin-left: 20px;
+      margin-bottom: -7px;
+      float: right;
+    }
+
+    //********************************************** FRIENDS PAGE ************************************************//
 
     .album_btn_div{
       min-height: 100px;

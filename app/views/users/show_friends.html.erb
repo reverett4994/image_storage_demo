@@ -1,0 +1,55 @@
+<div id="friends_page">
+  <h1>Your Friends :D</h1>
+  <div id="friends_list">
+    <% @friends.each do |friend| %>
+      <p><%= friend.email%><img src="/delete.png" class="delete_icon"></p>
+    <%end%>
+  </div>
+  </div>
+
+
+<script>
+$( ".delete_icon" ).click(function() {
+  var friend= $(this).parent().text()
+  var clicked=$(this).parent()
+  console.log(friend);
+  swal({
+    title: "Are you sure you want to remove the friend "+ $(this).parent().text()+"?",
+    text: "This friend will be removed but can added again as a friend later",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes, remove them!",
+    cancelButtonText: "No, cancel!",
+    closeOnConfirm: false,
+    closeOnCancel: false
+  },
+  function(isConfirm){
+    if (isConfirm) {
+      $.ajax({
+        type: "POST",
+        url: "/users/remove-friend",
+        dataType:"json",
+        data: {friend:friend},
+        success:function(data) {
+          var id=Object.values(data)[0]
+          var email= Object.values(data)[1]
+          var status= Object.values(data)[2]
+          clicked.fadeOut()
+          return false;
+        },
+        error:function(data) {
+          console.log("bad");
+          console.log(data);
+          return false;
+        }
+      });
+      swal("Removed!", "friend was removed", "success");
+    } else {
+        $(".delete_check").prop('checked', false);
+        swal("Cancelled", "The friend is safe", "error");
+    }
+  });
+});
+
+</script>

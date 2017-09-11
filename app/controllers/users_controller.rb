@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  def show_friends
+    @user=current_user
+    @friends=@user.friends
+  end
   def change_email
     @user=current_user
     if @user.valid_password?(params[:password])
@@ -10,7 +14,6 @@ class UsersController < ApplicationController
     else
       flash[:alert] = "Wrong Password"
     end
-
   end
   def show
     @user = User.find(params[:id])
@@ -58,6 +61,21 @@ class UsersController < ApplicationController
     @friend=@friend.last
     current_user.accept_request(@friend)
 
+    respond_to do |format|
+      if user_signed_in?
+        format.html { redirect_to root_url, notice: 'error try again' }
+        format.json { render :json => { :id => "#{@friend.id}", :email => "#{@friend.email}",:status_code => "200" } }
+      else
+        format.html { redirect_to root_url, notice: 'error try again' }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+  def remove_friend
+    @friend= User.where("email LIKE ?",params[:friend])
+    @friend=@friend.last
+    current_user.remove_friend(@friend)
     respond_to do |format|
       if user_signed_in?
         format.html { redirect_to root_url, notice: 'error try again' }
