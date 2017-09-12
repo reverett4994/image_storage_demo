@@ -21,16 +21,11 @@ class UsersController < ApplicationController
     @public_count=@user.images.where("public LIKE true").count.to_i
     @friends_count=@user.images.where("only_friends LIKE true").count.to_i
     @private_count=@user.images.where("private LIKE true").count.to_i
-
+    @public_images=@user.images.where("public LIKE true")
   end
 
   def request_friend
-    if params[:friend].is_a? Integer
-      @friend= User.find(params[:friend])
-    else
-      @friend= User.where("email LIKE ?",params[:friend])
-      @friend=@friend.last
-    end
+    @friend= User.find(params[:friend])
     if current_user.pending_friends.include?(@friend) || current_user.friends.include?(@friend)
       respond_to do |format|
         format.html { redirect_to root_url, notice: 'error try again' }
@@ -43,7 +38,7 @@ class UsersController < ApplicationController
         end
     else
       current_user.friend_request(@friend)
-
+      current_user.save
       respond_to do |format|
         if user_signed_in?
           format.html { redirect_to root_url, notice: 'error try again' }

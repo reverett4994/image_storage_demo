@@ -70,6 +70,7 @@
             </ul>
           </div>
         </div>
+
         <div id="new_friend_div">
           <h1>Make a New Friend!</h1>
           <p>Your new friends Email:</p> <input type="text" name="friend_email" value="" placeholder="example@example.com" id="friend_txt">
@@ -86,11 +87,15 @@
         </div>
         <div id="profile_gallery_image_wrapper">
           <h1>Most Recent Images</h1>
-          <% @user.images.last(8).each do |image| %>
-            <%= link_to(image) do %>
-              <%= image_tag image.file.url,class:"profile_gallery_image" %>
+          <%if  @user.images.count == 0 %>
+            <p>you have no imaages!</p>
+          <%else%>
+            <% @user.images.last(8).each do |image| %>
+              <%= link_to(image) do %>
+                <%= image_tag image.file.url,class:"profile_gallery_image" %>
+              <% end %>
             <% end %>
-          <% end %>
+          <%end%>
 
           <a href="/images" class="btn btn-4 user_page_btn"><span>See All Your Pictures</span></a><br>
         </div>
@@ -136,10 +141,71 @@
           <div class="banner_pic"><img src="/logo.png"></div>
           <div class="banner_user"><%=@user.email[/[^@]+/]%>'s <br>Page</div>
           <div class="banner_item"><h6>User Since</h6><p><%=@user.created_at.to_formatted_s(:concise) %></p></div>
-          <div class="banner_item"><h6>Total Images</h6><p><%=@user.images.count%></p></div>
+          <div class="banner_item"><h6>Total Public Images</h6><p><%=@public_count%></p></div>
           <div class="banner_item"><h6>Total Albums</h6><p><%=@user.albums.count%></p></div>
           <div class="banner_item"><h6>Total Friends</h6><p><%=@user.friends.count.to_i%></p></div>
         </div>
+
+        <div id="friends_banner">
+          <h1><%=@user.email[/[^@]+/]%>'s stats</h1>
+          <div class="friends_banner_sub">
+            <h1>Current Friends: <div class ='friends_count'><%=@user.friends.count.to_i%></div class ='friends_count'></h1>
+            <ul class="friends_ul">
+              <% @user.friends.first(5).each do |u| %>
+                <li><%= link_to u.email,"/users/#{u.id}" %></li> <br>
+              <%end%>
+              <% if @user.friends.count > 5 %>
+                 <li><a href="#">See the rest of their friends!</a> </li>
+              <% elsif @user.friends.count == 0 %>
+                  <li>they have no friends! :(</li>
+               <% else %>
+               <li>Thats all their friends!</li>
+              <%end%>
+            </ul>
+          </div>
+          <div class="friends_banner_sub">
+            <h1><a href="#" class="request">Request Friendship</a></h1>
+          </div>
+          <div class="friends_banner_sub">
+            <h1>Albums</h1>
+            <ul class="pending_ul">
+              <% @user.albums.first(5).each do |u| %>
+                <li class="pending_li"><%= link_to u.name,"/albums/#{u.name}" %></li> <br>
+              <%end%>
+              <% if @user.albums.count > 5 %>
+                 <li><a href="/albums">See the rest of their albums!</a> </li>
+             <% elsif @user.albums.count == 0 %>
+                 <li>they have no albums!</li>
+             <% else %>
+                 <li>Thats all their albums!</li>
+              <%end%>
+            </ul>
+          </div>
+        </div>
+
+        <div id="user_banner">
+          <div class="banner_pic"><img src="/logo.png"></div>
+          <div class="banner_user"><%=@user.email[/[^@]+/]%>'s <br>Images</div>
+          <div class="banner_item"><h6>Public Images</h6><p><%=@public_count%></p></div>
+          <div class="banner_item"><h6>Friends Only Images</h6><p><%=@friends_count%></p></div>
+        </div>
+        <div id="profile_gallery_image_wrapper">
+          <h1>Most Recent Public Images</h1>
+          <%if @public_images.count == 0 %>
+            <p>This user has no public images</p>
+          <%else%>
+          <%@public_images.last(8).each do |image| %>
+              <%= link_to(image) do %>
+                <%= image_tag image.file.url,class:"profile_gallery_image" %>
+              <% end %>
+            <% end %>
+          <%end%>
+          <a href="/images?user=<%=@user.id%>" class="btn btn-4 user_page_btn"><span>go to user's images</span></a><br>
+        </div>
+
+
+
+
         <button type="button" class="request">Request Friendship!</button>
         <%= link_to "#{@user.email} Pictures",images_path(:user => @user.id)%><br>
         <a href="/albums" class=""><span><%=@user.email%> Albums</span></a>
@@ -157,7 +223,7 @@
 <script>
 
 $( ".request" ).click(function() {
-  var friend = gon.user;
+  var friend = parseInt(gon.user);
   console.log(friend);
 
   $.ajax({
@@ -166,9 +232,21 @@ $( ".request" ).click(function() {
     dataType:"json",
     data: {friend:friend},
     success:function(data) {
-      console.log("good");
-      alert("request sent!")
-      return false;
+      var id=Object.values(data)[0]
+      var email= Object.values(data)[1]
+      var status= Object.values(data)[2]
+      console.log(status);
+      if (status==500){
+        alert("request was already sent or is already a friend!")
+      }else if (status==400){
+        alert("They have already asked you to be their friend! Just accept their request.")
+      } else{
+        // append li in ul
+        $(".pending_ul").append('<li><a href="/users/' +id.toString()+ '">'+email.toString()+'</a></li>');
+        $(".pending_count").text( parseInt( $(".pending_count").text() )+1 );parseInt()
+        alert("request sent!")
+        return false;
+      }
     },
     error:function(data) {
       console.log("bad");

@@ -2,7 +2,7 @@
   <h1>Your Friends :D</h1>
   <div id="friends_list">
     <% @friends.each do |friend| %>
-      <p><%= friend.email%><img src="/delete.png" class="delete_icon"></p>
+      <p><%= link_to friend.email,"/users/#{friend.id}" %></li><img src="/delete.png" class="delete_icon"></p>
     <%end%>
   </div>
   </div>
