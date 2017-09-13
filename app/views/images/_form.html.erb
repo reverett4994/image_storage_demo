@@ -1,16 +1,22 @@
 
 <%= simple_form_for @image do |f| %>
-  <%= f.input :name%>
+<div id="dZUpload" class="dropzone"></div>
 
-  <%= f.label "Public (Everybody)" %>
-  <%= f.input_field :public, as: :boolean %><br>
+  <h2>Title of the Image (optional)</h2>
+  <%= f.input :name%>
+  <h2>Who Can See the Image</h2>
+  <%= f.label "Public (Everybody)"%>
+  <%= f.input_field :public, as: :boolean, checked_value: true %><br><br>
   <%= f.label "Friends and You Only" %>
-  <%= f.input_field :only_friends, as: :boolean %><br>
+  <%= f.input_field :only_friends, as: :boolean %><br><br>
   <%= f.label "Private (only you)" %>
-  <%= f.input_field :private, as: :boolean %><br>
-  <%= f.button :submit %>
-  <div id="dZUpload" class="dropzone"></div>
+  <%= f.input_field :private, as: :boolean %><br><br>
+  <%= f.button :submit, "Upload Image", class: "btn btn-4"  %>
+
 <% end %>
+
+
+
 
 
 <script>

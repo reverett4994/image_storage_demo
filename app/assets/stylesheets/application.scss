@@ -109,7 +109,7 @@ h1 {
   margin-top: 50px;
   font-size: 105px;
   font-family: 'Fjalla One', sans-serif;
-  letter-spacing: 3px;font-family: 'Montserrat', sans-serif;
+  letter-spacing: 3px;
 }
 .sub_text{
   text-align: center;
@@ -329,6 +329,7 @@ $white: #fff;
 
 #gallery_wrapper{
   height: 100%;
+  min-height: 100vh;
   margin-top: -110px;
   padding-top: 50px;
   background-color: #2C2F34;
@@ -468,21 +469,6 @@ span.text-content span {
 
 
 //**********************************************SHOW IMAGE************************************************//
-
-//**********************************************NEW IMAGE************************************************//
-
-#dZUpload{
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 275px;
-  color: #646C7F;
-  font-size: 19px;
-  font-family: 'Exo 2', sans-serif;
-  border-radius: 5px;
-  border: 5px solid blue;
-}
-//**********************************************NEW IMAGE************************************************//
 
 
 //********************************************** SELECT BOX ************************************************//
@@ -1079,7 +1065,7 @@ span.text-content span {
 .user_edit_banner{
 
   a{
-    color: black;
+    color: white;
     text-decoration: underline;
     display: inline-block;
     font-size: 25px;
@@ -1119,6 +1105,74 @@ span.text-content span {
     }
 
     //********************************************** FRIENDS PAGE ************************************************//
+
+
+
+
+    //********************************************** NEW IMAGE PAGE ************************************************//
+
+  //font-family: 'Montserrat', sans-serif;
+  //font-family: 'Fjalla One', sans-serif;
+
+    #new_image_wrapper{
+      min-height: 100vh;
+      height: 100%;
+      padding-top: 50px;
+      background-color: #2C2F34;
+      background-image: url('/background.jpg');
+        /* Create the parallax scrolling effect */
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      h1{
+        font-family: 'Fjalla One', sans-serif;
+        font-size: 36px;
+        color: white;
+        text-align: center;
+      }
+      form{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 500px;
+        padding-left: 250px;
+      }
+      label{
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 20px;
+        padding: 10px;
+
+
+      }
+      .checkbox{
+        margin: 0 !important;
+      }
+      .btn{
+        width: auto;
+        margin: 25px;
+      }
+      #dZUpload{
+        margin-top: 50px;
+        max-width: 375px;
+        color: #646C7F;
+        font-size: 19px;
+        font-family: 'Exo 2', sans-serif;
+        border-radius: 5px;
+        border: 5px solid #6DBFE7;
+      }
+      h2{
+        margin-top: 35px;
+        color: white;
+        font-size: 24px;
+        font-family: 'Fjalla One', sans-serif;
+        letter-spacing: 1.5px;
+      }
+    }
+
+
+    //********************************************** NEW IMAGE PAGE ************************************************//
 
     .album_btn_div{
       min-height: 100px;

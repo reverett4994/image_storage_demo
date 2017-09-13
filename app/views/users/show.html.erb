@@ -31,11 +31,11 @@
                 <li><%= link_to u.email,"/users/#{u.id}" %></li> <br>
               <%end%>
               <% if @user.friends.count > 5 %>
-                 <li><a href="#">See the rest of your friends!</a> </li>
+                 <li><a href="/user/friends">See the rest of your friends!</a> </li>
               <% elsif @user.friends.count == 0 %>
                   <li>You have no friends! :(</li>
                <% else %>
-               <li>Thats all your friends!</li>
+               <li><a href="/user/friends">Manage your friends!</a> </li>
               <%end%>
             </ul>
           </div>
@@ -86,6 +86,8 @@
           <div class="banner_item"><h6>Private Images</h6><p><%=@private_count%></p></div>
         </div>
         <div id="profile_gallery_image_wrapper">
+          <%= link_to 'Add a Image', new_image_path,class:"btn btn-4 user_page_btn inline" %>
+
           <h1>Most Recent Images</h1>
           <%if  @user.images.count == 0 %>
             <p>you have no imaages!</p>
@@ -96,8 +98,10 @@
               <% end %>
             <% end %>
           <%end%>
+          <a href="/images" class="btn btn-4 user_page_btn "><span>See All Your Pictures</span></a>
 
-          <a href="/images" class="btn btn-4 user_page_btn"><span>See All Your Pictures</span></a><br>
+
+
         </div>
 
         <div id="albums_banner">
@@ -203,12 +207,7 @@
           <a href="/images?user=<%=@user.id%>" class="btn btn-4 user_page_btn"><span>go to user's images</span></a><br>
         </div>
 
-
-
-
-        <button type="button" class="request">Request Friendship!</button>
-        <%= link_to "#{@user.email} Pictures",images_path(:user => @user.id)%><br>
-        <a href="/albums" class=""><span><%=@user.email%> Albums</span></a>
+      <a href="/albums" class=""><span><%=@user.email%> Albums</span></a>
      <%end%>
   <%end%>
 

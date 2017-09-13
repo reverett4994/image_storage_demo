@@ -74,18 +74,25 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    @image = current_user.images.build(image_params.merge(file:current_user.temp_pic))
+    if current_user.temp_pic.exists?
+      @image = current_user.images.build(image_params.merge(file:current_user.temp_pic))
 
-
-    respond_to do |format|
-      if @image.save
-        format.html { redirect_to @image, notice: 'Image was successfully created.' }
-        format.json { render :show, status: :created, location: @image }
-      else
-        format.html { render :new }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @image.save
+          current_user.temp_pic=nil
+          current_user.save
+          format.html { redirect_to @image, notice: 'Image was successfully created.' }
+          format.json { render :show, status: :created, location: @image }
+        else
+          format.html { render :new }
+          format.json { render json: @image.errors, status: :unprocessable_entity }
+        end
       end
+
+    else
+      redirect_to "/"
     end
+
   end
 
   # PATCH/PUT /images/1

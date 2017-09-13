@@ -2,6 +2,8 @@
   <% if @album %>
     <h1>All Images from <%=@album.name%> album </h1>
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
+  <%elsif @u%>
+    <h1><%=@u.email%>'s Images</h1>
   <%elsif user_signed_in? == false%>
     <h1>Newist Public Images</h1>
   <%else%>
