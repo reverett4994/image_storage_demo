@@ -4,13 +4,13 @@
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
   <%elsif @u%>
     <h1><%=@u.email%>'s Images</h1>
-  <%elsif user_signed_in? == false%>
+  <%elsif user_signed_in? == false || @public%>
     <h1>Newist Public Images</h1>
   <%else%>
     <h1>Your Images</h1>
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
   <%end%>
-
+  <a class="active" href="/images?public=true">All Public Images</a>
 
   <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span> </a>
   <% if @album%>

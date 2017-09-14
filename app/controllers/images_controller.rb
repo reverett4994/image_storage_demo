@@ -12,6 +12,9 @@ class ImagesController < ApplicationController
       elsif params[:user]
         @u=User.find(params[:user])
         @images=@u.images.paginate(:page => params[:page], :per_page => 3)
+      elsif params[:public]
+        @public=true
+        @images = Image.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
       else
         @images = current_user.images.paginate(:page => params[:page], :per_page => 3)
       end
