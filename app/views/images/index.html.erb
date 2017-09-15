@@ -4,13 +4,26 @@
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
   <%elsif @u%>
     <h1><%=@u.email%>'s Images</h1>
+  <%elsif @friends%>
+    <h1>Your Friends Images</h1>
   <%elsif user_signed_in? == false || @public%>
     <h1>Newist Public Images</h1>
   <%else%>
     <h1>Your Images</h1>
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
   <%end%>
-  <a class="active" href="/images?public=true">All Public Images</a>
+
+<div id="image_tab_container">
+  <%if user_signed_in?%>
+    <a href="/images"><div class="image_tab tab_one">Your Images</div></a>
+    <a href="/images?friends=true"><div class="image_tab tab_two">Your Friends Images</div></a>
+  <%else%>
+    <a href="/users/sign_in"><div class="image_tab tab_one">Your Images</div></a>
+    <a href="/users/sign_in"><div class="image_tab tab_two">Your Friends Images</div></a>
+  <%end%>
+  <a href="/images?public=true"><div class="image_tab tab_three">Newist Public Images</div></a>
+
+</div>
 
   <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span> </a>
   <% if @album%>
@@ -43,6 +56,30 @@
 
 
 <script>
+
+
+$( document ).ready(function() {
+    if ($("h1").text() == "Newist Public Images"){
+      $(".tab_three").css("border-color", "#0ab1ff");
+    } else if ($("h1").text() == "Your Images") {
+        $(".tab_one").css("border-color", "#0ab1ff");
+    } else {
+        $(".tab_two").css("border-color", "#0ab1ff");
+    }
+  });
+
+$(".image_tab").hover(function(){
+     original=$(this).css("border-bottom-color")
+    $(this).css("border-color", "#0ab1ff");
+    }, function(){
+    $(this).css("border-color", original);
+});
+
+$( ".tab_one" ).click(function() {
+
+});
+
+
 $(function() {
   $( ".text-content" ).each(function() {
     var image= ($(this).siblings().height()) * -1
