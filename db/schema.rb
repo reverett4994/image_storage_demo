@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818072330) do
+ActiveRecord::Schema.define(version: 20170919062614) do
 
   create_table "albums", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -24,6 +24,19 @@ ActiveRecord::Schema.define(version: 20170818072330) do
     t.integer "image_id", limit: 4, null: false
     t.integer "album_id", limit: 4, null: false
   end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",           limit: 255, null: false
+    t.integer  "sluggable_id",   limit: 4,   null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope",          limit: 255
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "friendships", force: :cascade do |t|
     t.integer  "friendable_id",   limit: 4
@@ -68,6 +81,8 @@ ActiveRecord::Schema.define(version: 20170818072330) do
     t.string   "temp_pic_content_type",  limit: 255
     t.integer  "temp_pic_file_size",     limit: 4
     t.datetime "temp_pic_updated_at"
+    t.string   "slug",                   limit: 255
+    t.string   "username",               limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

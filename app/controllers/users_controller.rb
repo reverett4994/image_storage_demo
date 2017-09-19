@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     end
   end
   def show
-    @user = User.find(params[:id])
+    @user = User.friendly.find(params[:id])
     gon.user=@user.id
     @public_count=@user.images.where("public LIKE true").count.to_i
     @friends_count=@user.images.where("only_friends LIKE true").count.to_i

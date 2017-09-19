@@ -66,3 +66,5 @@ gem 'sweetalert-rails'
 gem 'jquery-form-validator-rails'
 
 gem 'dropzonejs-rails'
+
+gem 'friendly_id', '~> 5.1.0'

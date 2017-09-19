@@ -10,8 +10,17 @@ class ImagesController < ApplicationController
         @album=Album.find(params[:sort])
         @images=@album.images.paginate(:page => params[:page], :per_page => 3)
       elsif params[:user]
-        @u=User.find(params[:user])
-        @images=@u.images.paginate(:page => params[:page], :per_page => 3)
+        @u=User.friendly.find(params[:user])
+        if @u.friends_with?(current_user) || @u==current_user
+          @images=@u.images.where("only_friends OR public LIKE true").paginate(:page => params[:page], :per_page => 3)
+          if params[:r_friends]
+            @images=@u.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 3)
+          elsif params[:r_public]
+            @images=@u.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
+          end
+        else
+          @images=@u.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
+        end
       elsif params[:friends]
         @friends=current_user.friends.all
         @friends_images=[]
@@ -28,9 +37,21 @@ class ImagesController < ApplicationController
         @images = Image.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
       else
         @images = current_user.images.paginate(:page => params[:page], :per_page => 3)
+        if params[:r_friends]
+          @images=current_user.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 3)
+        elsif params[:r_public]
+          @images=current_user.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
+        elsif params[:r_private]
+          @images=current_user.images.where("private LIKE true").paginate(:page => params[:page], :per_page => 3)
+        end
       end
     else
       @images = Image.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
+    end
+    if @u
+      gon.user = @u.username
+    else
+      gon.user=current_user.username
     end
   end
 

@@ -3,7 +3,7 @@
     <h1>All Images from <%=@album.name%> album </h1>
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
   <%elsif @u%>
-    <h1><%=@u.email%>'s Images</h1>
+    <h1><%=@u.username%>'s Images</h1>
   <%elsif @friends%>
     <h1>Your Friends Images</h1>
   <%elsif user_signed_in? == false || @public%>
@@ -26,6 +26,14 @@
 </div>
 
   <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span> </a>
+
+  <form action="" id='radio_sort'>
+    <h2>Show only:</h2>
+    <input type="radio" name="sorting" value="public" class="radio_public"> <label>public</label>
+    <input type="radio" name="sorting" value="friends" class="radio_friends"> <label>friends only</label>
+    <input type="radio" name="sorting" value="private" class="radio_private"> <label>private</label>
+  </form>
+
   <% if @album%>
     <a href="/albums/<%=@album.name%>/add-images" class="edit_images_link">Add images to album</a>
     <a href="/albums/<%=@album.name%>/edit-images" class="edit_images_link">Remove images from album</a>
@@ -40,9 +48,9 @@
           <% if image.private %>
             <span class="text-content"><span>This Image is Private<br> Included in <%= image.albums.count%> Albums</span></span>
           <%elsif image.only_friends %>
-            <span class="text-content"><span>This Image is for Friends Only <br> Included in <%= image.albums.count%> Albums</span></span>
+            <span class="text-content"><span>This Image is for Friends Only <br> Included in <%= image.albums.count%> Albums <br> posted by <%=image.user.email%></span></span>
           <%else%>
-            <span class="text-content"><span>This Image is Public <br> Included in <%= image.albums.count%> Albums</span></span>
+            <span class="text-content"><span>This Image is Public <br> Included in <%= image.albums.count%> Albums <br> posted by <%=image.user.email%></span></span>
           <%end%>
         <% end %>
       <% end %>
@@ -58,12 +66,23 @@
 <script>
 
 
+$('.radio_public').click(function() {
+   if($('.radio_public').is(':checked')) { window.location.href = '/images?user='+gon.user+'&r_public=true'; }
+});
+$('.radio_friends').click(function() {
+   if($('.radio_friends').is(':checked')) { window.location.href = '/images?user='+gon.user+'&r_friends=true';  }
+});
+$('.radio_private').click(function() {
+   if($('.radio_private').is(':checked')) { window.location.href = '/images?r_private=true';  }
+});
+
+
 $( document ).ready(function() {
     if ($("h1").text() == "Newist Public Images"){
       $(".tab_three").css("border-color", "#0ab1ff");
     } else if ($("h1").text() == "Your Images") {
         $(".tab_one").css("border-color", "#0ab1ff");
-    } else {
+    } else if ($("h1").text() == "Your Friends Images") {
         $(".tab_two").css("border-color", "#0ab1ff");
     }
   });
@@ -99,8 +118,8 @@ $( ".btn" ).click(function() {
 
     $( ".text-content" ).each(function() {
       var image= $(this).siblings().position();
-      $(this).css({"margin-top":"-300px"});
-      $(this).css({"margin-left":image.left+130});
+      $(this).css({"margin-top":"-350px"});
+      $(this).css({"margin-left":image.left+75});
     });
   }else{
     document.cookie = "size=big";
@@ -156,8 +175,8 @@ window.onload = function() {
     $(".gallery_image").css("object-position","50% 20%")
     $( ".text-content" ).each(function() {
       var image= $(this).siblings().position();
-      $(this).css({"margin-top":"-300px"});
-      $(this).css({"margin-left":image.left+130});
+      $(this).css({"margin-top":"-350px"});
+      $(this).css({"margin-left":image.left+75});
     });
   };
 };

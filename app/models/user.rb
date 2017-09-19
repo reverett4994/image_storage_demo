@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+extend FriendlyId
+friendly_id :username, use: :slugged
  has_friendship
  has_many :images
  has_many :albums
