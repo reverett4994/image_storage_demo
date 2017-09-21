@@ -11,6 +11,7 @@
   <%else%>
     <h1>Your Images</h1>
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
+    <% @u=true%>
   <%end%>
 
 <div id="image_tab_container">
@@ -26,14 +27,21 @@
 </div>
 
   <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span> </a>
-
+  <% if @u%>
+    <form action="" id='radio_sort'>
+      <h2>Show only:</h2>
+      <input type="radio" name="sorting" value="public" class="radio_public"> <label class="radio_public">public</label>
+      <input type="radio" name="sorting" value="friends" class="radio_friends"> <label class="radio_friends">friends only</label>
+      <input type="radio" name="sorting" value="private" class="radio_private"> <label class="radio_private">private</label>
+    </form>
+  <%elsif @friends%>
   <form action="" id='radio_sort'>
     <h2>Show only:</h2>
-    <input type="radio" name="sorting" value="public" class="radio_public"> <label>public</label>
-    <input type="radio" name="sorting" value="friends" class="radio_friends"> <label>friends only</label>
-    <input type="radio" name="sorting" value="private" class="radio_private"> <label>private</label>
+    <input type="radio" name="sorting" value="public" class="radio_public_friends"> <label class="radio_public_friends">public</label>
+    <input type="radio" name="sorting" value="friends" class="radio_friends_friends"> <label class="radio_friends_friends">friends only</label>
+    <input type="radio" name="sorting" value="private" class="radio_private_friends"> <label class="radio_private_friends">private</label>
   </form>
-
+  <%end%>
   <% if @album%>
     <a href="/albums/<%=@album.name%>/add-images" class="edit_images_link">Add images to album</a>
     <a href="/albums/<%=@album.name%>/edit-images" class="edit_images_link">Remove images from album</a>
@@ -76,7 +84,17 @@ $('.radio_private').click(function() {
    if($('.radio_private').is(':checked')) { window.location.href = '/images?r_private=true';  }
 });
 
+$('.radio_public_friends').click(function() {
+   if($('.radio_public_friends').is(':checked')) { window.location.href = '/images?friends=true&r_public=true'; }
+});
+$('.radio_friends_friends').click(function() {
+   if($('.radio_friends_friends').is(':checked')) { window.location.href = '/images?friends=true&r_friends=true';  }
+});
+$('.radio_private_friends').click(function() {
+   if($('.radio_private_friends').is(':checked')) { window.location.href = '/images?r_private=true';  }
+});
 
+console.log(gon.friends);
 $( document ).ready(function() {
     if ($("h1").text() == "Newist Public Images"){
       $(".tab_three").css("border-color", "#0ab1ff");
@@ -84,7 +102,33 @@ $( document ).ready(function() {
         $(".tab_one").css("border-color", "#0ab1ff");
     } else if ($("h1").text() == "Your Friends Images") {
         $(".tab_two").css("border-color", "#0ab1ff");
+        $(".radio_private_friends").attr('disabled',true);
+        $(".radio_private_friends").css('opacity', '.5');
+    } else {
+      if (gon.friends==true) {
+        $(".radio_private").attr('disabled',true);
+        $(".radio_private").css('opacity', '.5');
+      }else if (gon.friends==false) {
+        $(".radio_friends").attr('disabled',true);
+        $(".radio_friends").css('opacity', '.5');
+        $(".radio_private").attr('disabled',true);
+        $(".radio_private").css('opacity', '.5');
+      }else{
+        $(".tab_one").css("border-color", "#0ab1ff");
+        $("h1").text("Your Images")
+      }
     }
+
+    if (gon.radio=="public"){
+      $(".radio_public").prop('checked', true);
+      $(".radio_public_friends").prop('checked', true);
+    }else if (gon.radio=="friends") {
+      $(".radio_friends").prop('checked', true);
+      $(".radio_friends_friends").prop('checked', true);
+    } else if (gon.radio=="private") {
+      $(".radio_private").prop('checked', true);
+    }
+
   });
 
 $(".image_tab").hover(function(){

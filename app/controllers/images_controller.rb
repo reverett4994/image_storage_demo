@@ -5,25 +5,48 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    if user_signed_in?
-      if params[:sort]
-        @album=Album.find(params[:sort])
-        @images=@album.images.paginate(:page => params[:page], :per_page => 3)
-      elsif params[:user]
-        @u=User.friendly.find(params[:user])
-        if @u.friends_with?(current_user) || @u==current_user
-          @images=@u.images.where("only_friends OR public LIKE true").paginate(:page => params[:page], :per_page => 3)
-          if params[:r_friends]
-            @images=@u.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 3)
-          elsif params[:r_public]
-            @images=@u.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
-          end
-        else
+# SORTING FOR ALBUMS
+    if params[:sort]
+      @album=Album.find(params[:sort])
+      @images=@album.images.paginate(:page => params[:page], :per_page => 3)
+    elsif params[:user]
+      @u=User.friendly.find(params[:user])
+      if user_signed_in? && @u.friends_with?(current_user)
+        gon.friends= true
+      end
+      if user_signed_in? && @u.friends_with?(current_user) || @u==current_user
+        @images=@u.images.where("only_friends OR public LIKE true").paginate(:page => params[:page], :per_page => 3)
+        if params[:r_friends]
+          @images=@u.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 3)
+        elsif params[:r_public]
           @images=@u.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
         end
-      elsif params[:friends]
-        @friends=current_user.friends.all
-        @friends_images=[]
+      else
+        @images=@u.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
+        gon.friends= false
+      end
+# SORTING FOR FRIENDS
+    elsif params[:friends]
+      @friends=current_user.friends.all
+      @friends_images=[]
+
+      if params[:r_friends]
+        @friends.each do |friend|
+          friend.images.each do |image|
+            if image.private == false && image.public == false
+              @friends_images<<image
+            end
+          end
+        end
+      elsif params[:r_public]
+        @friends.each do |friend|
+          friend.images.each do |image|
+            if image.public == true
+              @friends_images<<image
+            end
+          end
+        end
+      else
         @friends.each do |friend|
           friend.images.each do |image|
             if image.private == false
@@ -31,28 +54,39 @@ class ImagesController < ApplicationController
             end
           end
         end
-        @images=@friends_images.paginate(:page => params[:page], :per_page => 3)
-      elsif params[:public]
-        @public=true
-        @images = Image.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
-      else
-        @images = current_user.images.paginate(:page => params[:page], :per_page => 3)
-        if params[:r_friends]
-          @images=current_user.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 3)
-        elsif params[:r_public]
-          @images=current_user.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
-        elsif params[:r_private]
-          @images=current_user.images.where("private LIKE true").paginate(:page => params[:page], :per_page => 3)
-        end
       end
-    else
+      @images=@friends_images.paginate(:page => params[:page], :per_page => 3)
+#SORTING FOR NEWIST PUBLIC
+    elsif params[:public]
+      @public=true
       @images = Image.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
+# SORTING FOR YOUR OWN
+    else
+      @images = current_user.images.paginate(:page => params[:page], :per_page => 3)
+      gon.friends= "self"
+      if params[:r_friends]
+        @images=current_user.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 3)
+      elsif params[:r_public]
+        @images=current_user.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 3)
+      elsif params[:r_private]
+        @images=current_user.images.where("private LIKE true").paginate(:page => params[:page], :per_page => 3)
+      end
     end
+#JAVASCRIPT VARIBLES
     if @u
       gon.user = @u.username
-    else
+    elsif user_signed_in?
       gon.user=current_user.username
     end
+
+    if params[:r_public]
+      gon.radio="public"
+    elsif params[:r_friends]
+      gon.radio="friends"
+    elsif params[:r_private]
+      gon.radio="private"
+    end
+
   end
 
 
