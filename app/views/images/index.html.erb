@@ -56,9 +56,9 @@
           <% if image.private %>
             <span class="text-content"><span>This Image is Private<br> Included in <%= image.albums.count%> Albums</span></span>
           <%elsif image.only_friends %>
-            <span class="text-content"><span>This Image is for Friends Only <br> Included in <%= image.albums.count%> Albums <br> posted by <%=image.user.email%></span></span>
+            <span class="text-content"><span>This Image is for Friends Only <br> Included in <%= image.albums.count%> Albums <br> posted by <%=image.user.username%></span></span>
           <%else%>
-            <span class="text-content"><span>This Image is Public <br> Included in <%= image.albums.count%> Albums <br> posted by <%=image.user.email%></span></span>
+            <span class="text-content"><span>This Image is Public <br> Included in <%= image.albums.count%> Albums <br> posted by <%=image.user.username%></span></span>
           <%end%>
         <% end %>
       <% end %>

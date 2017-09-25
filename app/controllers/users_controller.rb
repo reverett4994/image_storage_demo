@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
-
+  before_action :authenticate_user!, only: [:change_email,:request_friend,:accept_friend,:remove_friend]
   def show_friends
     @user=current_user
     @friends=@user.friends
   end
+
   def change_email
     @user=current_user
     if @user.valid_password?(params[:password])
@@ -12,9 +13,11 @@ class UsersController < ApplicationController
       @user.save
       redirect_to "/"
     else
+      redirect_to "/pages/set-email"
       flash[:alert] = "Wrong Password"
     end
   end
+
   def show
     @user = User.friendly.find(params[:id])
     gon.user=@user.id

@@ -1,5 +1,6 @@
 <h1><%= @image.name %></h1>
-<h2>Submitted by: <%= @image.user.email %></h2>
+<h2>Submitted by: <%= link_to "#{ @image.user.username}", "/users/#{@image.user.username}" %></h2>
+
 <%= image_tag @image.file.url %>
 
 

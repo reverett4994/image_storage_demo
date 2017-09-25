@@ -23,12 +23,15 @@
       <% if user_signed_in? %>
         <li> <%= link_to "hello #{current_user.username} Sign Out :(", destroy_user_session_path, :method => :delete %></li>
         <li><%= link_to 'Your Page', "/users/#{current_user.username}" %></li>
+        <li><a class="active" href="/albums">Albums</a></li>
+        <li><a class="active" href="/images">Images</a></li>
       <%else%>
         <li><%= link_to 'Sign In!', new_user_session_path %></li>
+        <li><a class="active" href="/albums">Albums</a></li>
+        <li><a class="active" href="/images?public=true">Images</a></li>
       <%end%>
 
-      <li><a class="active" href="/albums">Albums</a></li>
-      <li><a class="active" href="/images">Images</a></li>
+
   </ul>
 </div>
   <% if false%>

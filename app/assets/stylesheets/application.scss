@@ -1207,6 +1207,115 @@ span.text-content span {
 
     //********************************************** NEW IMAGE PAGE ************************************************//
 
+
+    //********************************************** CHANGE EMAIL PAGE ************************************************//
+
+    #change_email_wrapper{
+      min-height: 100vh;
+      height: 100%;
+      padding-top: 50px;
+      background-color: #2C2F34;
+      background-image: url("/light_background.jpg");
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      text-align: center;
+      h1{
+        margin-top: 150px;
+        font-size: 34px;
+        font-family: 'Fjalla One', sans-serif;
+      }
+      form{
+        width: 800px;
+        margin-top: 100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        .new_email_input{
+          margin-bottom: 50px;
+          font-family: 'Exo 2', sans-serif;
+          font-size: 24px;
+          input{
+            float: right;
+            clear: right;
+
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+          }
+        }
+      }
+    }
+
+    .email_btn{
+      color: #545351;
+      cursor: pointer;
+      display: block;
+      font-size:16px;
+      font-weight: 400;
+      line-height: 45px;
+      margin: 0 auto 2em;
+      position: relative;
+      text-decoration: none;
+      text-transform: uppercase;
+      vertical-align: middle;
+      width: 50%;
+    }
+
+    //********************************************** CHANGE EMAIL PAGE ************************************************//
+
+
+    //********************************************** CHANGE PASSWORD PAGE ************************************************//
+
+    #change_password_wrapper{
+      min-height: 100vh;
+      height: 100%;
+      padding-top: 50px;
+      background-color: #2C2F34;
+      background-image: url("/light_background.jpg");
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      text-align: center;
+      h1{
+        margin-top: 150px;
+        font-size: 34px;
+        font-family: 'Fjalla One', sans-serif;
+      }
+      form{
+        width: 800px;
+        margin-top: 100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        .new_email_input{
+          margin-bottom: 50px;
+          font-family: 'Exo 2', sans-serif;
+          font-size: 18px;
+          input{
+            float: right;
+            clear: right;
+
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+          }
+        }
+      }
+      .error{
+        color: red;
+        margin-left: 5px;
+      }
+    }
+
+    //********************************************** CHANGE PASSWORD PAGE ************************************************//
+
     .album_btn_div{
       min-height: 100px;
       padding-left: 400px;
