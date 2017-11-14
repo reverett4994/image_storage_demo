@@ -259,6 +259,8 @@ $white: #fff;
 //button-4
 ///////////////////////////
 .btn-4 {
+  min-width: -moz-min-content;    /* Firefox */
+  min-width: -webkit-min-content; /* Chrome */
   border: 3px solid;
   overflow: hidden;
   position: relative;

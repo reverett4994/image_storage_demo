@@ -10,10 +10,10 @@
 
   <%end%>
 
-
-  <%= link_to 'Edit', edit_image_path(@image) %> |
-  <%= link_to 'Back', images_path %>
-  <%= link_to 'Destroy', @image, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% if user_signed_in? && current_user == @image.user%>
+    <%= link_to 'Edit', edit_image_path(@image) %> |
+    <%= link_to 'Delete', @image, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%end%>
 </div>
 
 

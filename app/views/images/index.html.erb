@@ -9,7 +9,7 @@
   <%elsif user_signed_in? == false || @public%>
     <h1>Newist Public Images</h1>
   <%else%>
-    <h1>Your Images</h1>
+    <h1>Your Images </h1>
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
     <% @u=true%>
   <%end%>
@@ -113,6 +113,8 @@ $( document ).ready(function() {
         $(".radio_friends").css('opacity', '.5');
         $(".radio_private").attr('disabled',true);
         $(".radio_private").css('opacity', '.5');
+      }else if (gon.album==true) {
+
       }else{
         $(".tab_one").css("border-color", "#0ab1ff");
         $("h1").text("Your Images")
