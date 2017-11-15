@@ -20,7 +20,7 @@ html{
 }
 body{
   margin: 0;
-  min-height: 100%;
+  min-height: 110vh;
 }
 h1 {
   a{
@@ -110,6 +110,7 @@ h1 {
   font-size: 105px;
   font-family: 'Fjalla One', sans-serif;
   letter-spacing: 3px;
+  margin-bottom: .7em;
 }
 .sub_text{
   text-align: center;
@@ -331,7 +332,7 @@ $white: #fff;
 
 #gallery_wrapper{
   height: 100%;
-  min-height: 100vh;
+  min-height: 113vh;
   margin-top: -110px;
   padding-top: 50px;
   background-color: #2C2F34;
@@ -478,6 +479,7 @@ span.text-content span {
   padding: 50px;
   padding-top: 150px;
   color: #e6e6e6;
+  min-height: 113.5vh;
   h1{
     text-align: center;
     font-size: 50px;
@@ -563,7 +565,7 @@ span.text-content span {
 
 //********************************************** ALBUM INDEX ************************************************//
 #album_gallery_wrapper{
-  min-height: 100vh;
+  min-height: 113vh;
   height: 100%;
   padding-top: 50px;
   background-color: #2C2F34;
@@ -654,7 +656,7 @@ span.text-content span {
 
 //********************************************** NEW ALBUM FORM ************************************************//
 #wrapper{
-  min-height: 100vh;
+  min-height: 113vh;
   height: 100%;
   padding-top: 50px;
   background-color: #2C2F34;
@@ -744,7 +746,7 @@ span.text-content span {
 //********************************************** LOG IN ************************************************//
 
 #login_wrapper{
-  min-height: 100vh;
+  min-height: 113vh;
   height: 100%;
   padding-top: 50px;
   background-color: #2C2F34;
@@ -869,7 +871,7 @@ span.text-content span {
 
     //********************************************** USER PAGE ************************************************//
   #user_page_wrapper{
-    min-height: 100vh;
+    min-height: 113vh;
     height: 100%;
     padding-top: 50px;
     background-color: #2C2F34;
@@ -1150,7 +1152,7 @@ span.text-content span {
   //font-family: 'Fjalla One', sans-serif;
 
     #new_image_wrapper{
-      min-height: 100vh;
+      min-height: 113vh;
       height: 100%;
       padding-top: 50px;
       background-color: #2C2F34;
@@ -1213,7 +1215,7 @@ span.text-content span {
     //********************************************** CHANGE EMAIL PAGE ************************************************//
 
     #change_email_wrapper{
-      min-height: 100vh;
+      min-height: 113vh;
       height: 100%;
       padding-top: 50px;
       background-color: #2C2F34;
@@ -1273,7 +1275,7 @@ span.text-content span {
     //********************************************** CHANGE PASSWORD PAGE ************************************************//
 
     #change_password_wrapper{
-      min-height: 100vh;
+      min-height: 113vh;
       height: 100%;
       padding-top: 50px;
       background-color: #2C2F34;

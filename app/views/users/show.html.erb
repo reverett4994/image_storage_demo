@@ -116,7 +116,7 @@
                 <li class="pending_li"><%= link_to u.name,"/albums/#{u.name}" %></li> <br>
               <%end%>
               <% if @user.albums.count > 5 %>
-                 <li><a href="/albums">See the rest of your pending friends!</a> </li>
+                 <li><a href="/albums">See the rest of your albums!</a> </li>
              <% elsif @user.albums.count == 0 %>
                  <li>You have no albums!</li>
              <% else %>
@@ -177,7 +177,7 @@
                 <li class="pending_li"><%= link_to u.name,"/albums/#{u.name}" %></li> <br>
               <%end%>
               <% if @user.albums.count > 5 %>
-                 <li><a href="/albums">See the rest of their albums!</a> </li>
+                <li><%= link_to "See the rest of their albums", "/albums?user=#{@user.username}"%></li>
              <% elsif @user.albums.count == 0 %>
                  <li>they have no albums!</li>
              <% else %>
@@ -207,7 +207,7 @@
           <a href="/images?user=<%=@user.username%>" class="btn btn-4 user_page_btn"><span>go to <%=@user.username%>'s images</span></a><br>
         </div>
 
-      
+
      <%end%>
   <%else%>
 
@@ -250,7 +250,8 @@
                  <li class="pending_li"><%= link_to u.name,"/albums/#{u.name}" %></li> <br>
                <%end%>
                <% if @user.albums.count > 5 %>
-                  <li><a href="/albums">See the rest of their albums!</a> </li>
+                  <li><%= link_to "See the rest of their albums", "/albums?user=#{@user.username}"%></li>
+
               <% elsif @user.albums.count == 0 %>
                   <li>they have no albums!</li>
               <% else %>

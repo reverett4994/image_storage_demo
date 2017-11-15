@@ -1,9 +1,15 @@
 <div id="album_gallery_wrapper">
-  <h1>Your Albums</h1>
-  <div class="album_btn_div">
-    <a href="/albums/new" class="fill_btn fill_btn--border fill_btn--primary fill_btn--animated "><h3><span>New Album</span></h3></a>
-    <a href="javascript:void(0)"id="delete_link"class="fill_btn fill_btn--border fill_btn--primary fill_btn--animated right"><h3><span>Delete Albums</span></h3></a>
-  </div>
+  <%if params[:user]%>
+    <h1><%=params[:user]%>'s Albums</h1>
+  <%else%>
+    <h1>Your Albums</h1>
+    <div class="album_btn_div">
+      <a href="/albums/new" class="fill_btn fill_btn--border fill_btn--primary fill_btn--animated "><h3><span>New Album</span></h3></a>
+      <a href="javascript:void(0)"id="delete_link"class="fill_btn fill_btn--border fill_btn--primary fill_btn--animated right"><h3><span>Delete Albums</span></h3></a>
+    </div>
+  <%end%>
+
+
       <% @albums.each do |album| %>
         <%= link_to(images_path(sort:album.id)) do %>
           <div class="album_link" id="<%=album.name.tr(" ", "_")%>">
@@ -16,15 +22,8 @@
           </div>
         <% end %>
       <% end %>
-  <br>
 
 </div>
-
-
-
-
-
-
 
 
 <script>

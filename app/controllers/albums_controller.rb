@@ -4,16 +4,27 @@ class AlbumsController < ApplicationController
   # GET /albums
   # GET /albums.json
   def index
-    if user_signed_in?
-      @albums = current_user.albums
+    if params[:user]
+      @user=User.friendly.find(params[:user])
+      @albums = @user.albums
       gon.albums=""
       current_user.albums.each do |a|
         gon.albums+=a.name + ","
       end
       gon.albums.chomp!(",")
     else
-      redirect_to "/users/sign_in"
+      if user_signed_in?
+        @albums = current_user.albums
+        gon.albums=""
+        current_user.albums.each do |a|
+          gon.albums+=a.name + ","
+        end
+        gon.albums.chomp!(",")
+      else
+        redirect_to "/users/sign_in"
+      end
     end
+
 
   end
 
@@ -30,6 +41,9 @@ class AlbumsController < ApplicationController
 
   # GET /albums/1/edit
   def edit
+    if user_signed_in? == false || current_user != @album.user
+      redirect_to '/'
+    end
   end
 
   # POST /albums

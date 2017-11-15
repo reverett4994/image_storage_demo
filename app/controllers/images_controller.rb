@@ -15,16 +15,16 @@ class ImagesController < ApplicationController
         gon.friends= true
       end
       if user_signed_in? && @u.friends_with?(current_user)
-        @images=@album.images.where("only_friends OR public LIKE true").paginate(:page => params[:page], :per_page => 6)
+        @images=@album.images.where("only_friends OR public LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
         if params[:r_friends]
-          @images=@album.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 6)
+          @images=@album.images.where("only_friends LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
         elsif params[:r_public]
-          @images=@album.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 6)
+          @images=@album.images.where("public LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
         end
       elsif @u==current_user
-        @images=@album.images.paginate(:page => params[:page], :per_page => 6)
+        @images=@album.images.order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
       else
-        @images=@album.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 6)
+        @images=@album.images.where("public LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
         gon.friends= false
       end
     elsif params[:user]
@@ -33,14 +33,14 @@ class ImagesController < ApplicationController
         gon.friends= true
       end
       if user_signed_in? && @u.friends_with?(current_user) || @u==current_user
-        @images=@u.images.where("only_friends OR public LIKE true").paginate(:page => params[:page], :per_page => 6)
+        @images=@u.images.where("only_friends OR public LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
         if params[:r_friends]
-          @images=@u.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 6)
+          @images=@u.images.where("only_friends LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
         elsif params[:r_public]
-          @images=@u.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 6)
+          @images=@u.images.where("public LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
         end
       else
-        @images=@u.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 6)
+        @images=@u.images.where("public LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
         gon.friends= false
       end
 # SORTING FOR FRIENDS
@@ -73,21 +73,23 @@ class ImagesController < ApplicationController
           end
         end
       end
+      @friends_images=@friends_images.sort! { |a, b|  a.created_at <=> b.created_at }.reverse
       @images=@friends_images.paginate(:page => params[:page], :per_page => 6)
+
 #SORTING FOR NEWIST PUBLIC
     elsif params[:public]
       @public=true
-      @images = Image.where("public LIKE true").paginate(:page => params[:page], :per_page => 6)
+      @images = Image.where("public LIKE true ").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
 # SORTING FOR YOUR OWN
     else
-      @images = current_user.images.paginate(:page => params[:page], :per_page => 6)
+      @images = current_user.images.order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
       gon.friends= "self"
       if params[:r_friends]
-        @images=current_user.images.where("only_friends LIKE true").paginate(:page => params[:page], :per_page => 6)
+        @images=current_user.images.where("only_friends LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
       elsif params[:r_public]
-        @images=current_user.images.where("public LIKE true").paginate(:page => params[:page], :per_page => 6)
+        @images=current_user.images.where("public LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
       elsif params[:r_private]
-        @images=current_user.images.where("private LIKE true").paginate(:page => params[:page], :per_page => 6)
+        @images=current_user.images.where("private LIKE true").order( 'images.created_at DESC' ).paginate(:page => params[:page], :per_page => 6)
       end
     end
 #JAVASCRIPT VARIBLES
@@ -119,11 +121,19 @@ class ImagesController < ApplicationController
 
   # GET /images/new
   def new
-    @image = current_user.images.build
+    if user_signed_in? == FALSE
+      redirect_to "/users/sign_in"
+    else
+      @image = current_user.images.build
+
+    end
   end
 
   # GET /images/1/edit
   def edit
+    if user_signed_in? == false || current_user != @image.user
+      redirect_to '/'
+    end
   end
 
   def add_to_album

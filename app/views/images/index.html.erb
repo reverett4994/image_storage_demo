@@ -27,14 +27,14 @@
 </div>
 
   <a href="javascript:void(0)" class="btn btn-4"><span>Change Image Size</span> </a>
-  <% if @u%>
+  <% if @u && @album==nil%>
     <form action="" id='radio_sort'>
       <h2>Show only:</h2>
       <input type="radio" name="sorting" value="public" class="radio_public"> <label class="radio_public">public</label>
       <input type="radio" name="sorting" value="friends" class="radio_friends"> <label class="radio_friends">friends only</label>
       <input type="radio" name="sorting" value="private" class="radio_private"> <label class="radio_private">private</label>
     </form>
-  <%elsif @friends%>
+  <%elsif @friends && @album==nil%>
   <form action="" id='radio_sort'>
     <h2>Show only:</h2>
     <input type="radio" name="sorting" value="public" class="radio_public_friends"> <label class="radio_public_friends">public</label>
@@ -42,7 +42,7 @@
     <input type="radio" name="sorting" value="private" class="radio_private_friends"> <label class="radio_private_friends">private</label>
   </form>
   <%end%>
-  <% if @album%>
+  <% if @album && user_signed_in? && current_user == @album.user%>
     <a href="/albums/<%=@album.name%>/add-images" class="edit_images_link">Add images to album</a>
     <a href="/albums/<%=@album.name%>/edit-images" class="edit_images_link">Remove images from album</a>
   <%end%>
