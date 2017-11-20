@@ -88,13 +88,13 @@ class AlbumsController < ApplicationController
   end
 
   def change_images
-    @album = Album.where("name LIKE ?",params[:name]).limit(1).last
+    @album = Album.find(params[:name])
     @images= @album.images.paginate(:page => params[:page], :per_page => 3)
     gon.album=@album.id
   end
 
   def add_images
-    @album = Album.where("name LIKE ?",params[:name]).limit(1).last
+    @album = Album.find(params[:name])
     @images=current_user.images.paginate(:page => params[:page], :per_page => 3)
     gon.album=@album.id
   end

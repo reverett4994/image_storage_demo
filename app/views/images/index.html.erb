@@ -43,8 +43,8 @@
   </form>
   <%end%>
   <% if @album && user_signed_in? && current_user == @album.user%>
-    <a href="/albums/<%=@album.name%>/add-images" class="edit_images_link">Add images to album</a>
-    <a href="/albums/<%=@album.name%>/edit-images" class="edit_images_link">Remove images from album</a>
+    <a href="/albums/<%=@album.id%>/add-images" class="edit_images_link">Add images to album</a>
+    <a href="/albums/<%=@album.id%>/edit-images" class="edit_images_link">Remove images from album</a>
   <%end%>
   <div class="flickr_pagination">
     <%= will_paginate @images %>
