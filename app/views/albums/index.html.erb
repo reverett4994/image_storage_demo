@@ -13,7 +13,7 @@
       <% @albums.each do |album| %>
         <%= link_to(images_path(sort:album.id)) do %>
           <div class="album_link" id="<%=album.name.tr(" ", "_")%>">
-            <% if album.images.length >0 %>
+            <% if album.images.length >0 && album.images.first.private == false%>
               <%= image_tag album.images.first.file.url,class:"album_icon" %>
             <%else%>
             <%= image_tag "pictures.png",class:"album_icon" %>

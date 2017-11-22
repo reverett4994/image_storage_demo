@@ -7,7 +7,7 @@
 
 <h3>Included in Albums:  <%= @image.albums.count%><br>
   <% @image.albums.each do |album| %>
-    <%= link_to "#{album.name}", "/albums/#{album.name}" %><br>
+    <%= link_to "#{album.name} (#{truncate(album.user.username, :length => 10)})", "/albums/#{album.name}" %><br>
   <%end%>
 </h3>
 <% if user_signed_in? %>

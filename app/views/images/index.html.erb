@@ -1,6 +1,6 @@
 <div id="gallery_wrapper">
   <% if @album %>
-    <h1>All Images from <%=@album.name%> album </h1>
+    <h1>All Images from <%=@album.name%> (<%=truncate(@album.user.username, :length => 10)%>) album </h1>
     <%= link_to 'Add a Image', new_image_path,class:"new_image_link" %>
   <%elsif @u%>
     <h1><%=@u.username%>'s Images</h1>
