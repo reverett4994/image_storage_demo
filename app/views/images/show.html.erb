@@ -43,7 +43,13 @@ $( ".add_btn" ).click(function() {
     data: {image:image,album:album },
     success:function(data) {
       console.log("good");
-      alert("image was added to album!")
+      var album = data['album_name'];
+      if (album == 'error') {
+        alert("Error")  
+      } else {
+        $( " <a href='/albums/"+album+"'>"+album+"</a> <br> " ).appendTo( "#album_list" );
+        alert("image was added to album!")
+      }
       return false;
     },
     error:function(data) {

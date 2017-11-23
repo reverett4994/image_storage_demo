@@ -139,17 +139,24 @@ class ImagesController < ApplicationController
   def add_to_album
     @image=Image.find(params[:image])
     @album=Album.find(params[:album])
-    @image.albums << @album unless @image.albums.include?(@album)
-    @album.images << @image unless @album.images.include?(@image)
-    respond_to do |format|
-      if @image.save && @album.save
-        format.html { redirect_to root_url, notice: 'error try again' }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to root_url, notice: 'error try again' }
-        format.json { head :no_content }
+    if @image.albums.include?(@album)
+      respond_to do |format|
+          format.json { render :json => {:album_name => "error"} }
+        end
+    else
+      @image.albums << @album unless @image.albums.include?(@album)
+      @album.images << @image unless @album.images.include?(@image)
+      respond_to do |format|
+        if @image.save
+          format.html { redirect_to root_url, notice: 'error try again' }
+          format.json { render :json => {:album_name => @album.name} }
+        else
+          format.html { redirect_to root_url, notice: 'error try again' }
+          format.json { render :json => {:album_name => "error"} }
+        end
       end
     end
+
   end
 
   def remove_album
