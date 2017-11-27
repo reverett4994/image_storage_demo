@@ -36,6 +36,34 @@ h1 {
   margin-bottom: -85px;
   font-family: 'Montserrat', sans-serif;
   font-style: italic;
+
+  input[type='text']{
+  background: #dae4f1 image-url("search.png") no-repeat 99% 50%;
+  background-size: 110%;
+  font-size: 1em;
+  padding: .8em;
+  display: inline-block;
+  float: right;
+  margin-top: .5em;
+  margin-right: .2em;
+  border: none;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  transition: all .5s ease;
+  border-radius: 100%
+}
+input[type='text']:focus {
+   width: 10em;
+   height: auto;
+   font-size: 1.2em;
+   margin-top: .3em;
+   border-radius: 5%;
+   background: #fafafa url("search.png") no-repeat 99% 50%;
+   background-size: 10%;
+   padding: .3em;
+}
 }
 #logo{
   height: 50px;
@@ -57,6 +85,8 @@ h1 {
   padding: 0;
   overflow: hidden;
   font-size: 18px;
+  display: inline-flex;
+float: right;
 }
 
 #header li {

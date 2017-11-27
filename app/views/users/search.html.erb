@@ -1,0 +1,7 @@
+<% if @user.nil?%>
+  <div id='login_wrapper'>
+    <h1>No Users Found!</h1>
+  </div>
+<%else%>
+  <%= render partial: 'user_page', :locals => {:user => @user}%>
+<%end%>

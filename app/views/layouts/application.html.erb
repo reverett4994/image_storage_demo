@@ -11,7 +11,18 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
   <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/theme-default.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+
+
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -30,7 +41,9 @@
         <li><a class="active" href="/albums">Albums</a></li>
         <li><a class="active" href="/images?public=true">Images</a></li>
       <%end%>
-
+      <%= form_tag('/search', :method => :get, class: 'tip', :data => {:tip => 'search for a user' }) do -%>
+        <div><%= text_field_tag 'search', nil %></div>
+      <% end -%>
 
   </ul>
 </div>
@@ -39,6 +52,15 @@
     <p class="alert"><%= alert %></p>
   <%end%>
 <%= yield %>
-
+  <a class="tip" data-tip="Cicero" href="http://en.wikipedia.org/wiki/De_finibus_bonorum_et_malorum">De finibus bonorum et malorum</a>
+  <script>
+  $(document).ready(function() {
+       $('.tip').tipr({
+            'speed': 300,
+            'mode': 'below',
+            'space': 70
+       });
+  });
+  </script>
 </body>
 </html>

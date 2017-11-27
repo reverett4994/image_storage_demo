@@ -49,6 +49,9 @@
   <div class="flickr_pagination">
     <%= will_paginate @images %>
   </div>
+      <% if @images.count < 1 %>
+        <h1>Sorry no images found </h1>
+      <%end%>
       <% @images.each do |image| %>
         <%= link_to(image) do %>
           <%= image_tag image.file.url,class:"gallery_image" %>

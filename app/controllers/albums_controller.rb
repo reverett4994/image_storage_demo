@@ -8,10 +8,12 @@ class AlbumsController < ApplicationController
       @user=User.friendly.find(params[:user])
       @albums = @user.albums
       gon.albums=""
-      current_user.albums.each do |a|
-        gon.albums+=a.name + ","
+      if user_signed_in?
+        current_user.albums.each do |a|
+          gon.albums+=a.name + ","
+        end
+        gon.albums.chomp!(",")
       end
-      gon.albums.chomp!(",")
     else
       if user_signed_in?
         @albums = current_user.albums

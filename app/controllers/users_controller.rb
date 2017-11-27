@@ -1,6 +1,20 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authenticate_user!, only: [:change_email,:request_friend,:accept_friend,:remove_friend]
+
+  def search
+    @user=User.where("username LIKE ?",params[:search])
+    if @user.length == 1
+      @user=@user.first
+      gon.user=@user.id
+      @public_count=@user.images.where("public LIKE true").count.to_i
+      @friends_count=@user.images.where("only_friends LIKE true").count.to_i
+      @private_count=@user.images.where("private LIKE true").count.to_i
+      @public_images=@user.images.where("public LIKE true")
+    else
+      @user=nil
+    end
+  end
   def show_friends
     @user=current_user
     @friends=@user.friends
